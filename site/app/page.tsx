@@ -8,6 +8,7 @@ import FallbackToggle from "@/components/FallbackToggle";
 import CodeBlock from "@/components/CodeBlock";
 import Backdrop from "@/components/Backdrop";
 import { Glass } from "glassfx/react";
+import ModifiersShowcase from "@/components/ModifiersShowcase";
 
 const SHAPES: { label: string; cls: string; style?: React.CSSProperties }[] = [
   { label: "circle", cls: "rounded-full h-32 w-32" },
@@ -26,15 +27,6 @@ const SHAPES: { label: string; cls: string; style?: React.CSSProperties }[] = [
     cls: "h-32 w-36",
     style: { borderRadius: "62% 38% 54% 46% / 49% 56% 44% 51%" },
   },
-];
-
-const MODIFIERS = [
-  { cls: "glass", name: "glass", note: "base material" },
-  { cls: "glass glass-refract", name: "glass-refract", note: "real lensing" },
-  { cls: "glass glass-strong", name: "glass-strong", note: "frosted slab" },
-  { cls: "glass glass-strong glass-opaque", name: "glass-opaque", note: "near-solid" },
-  { cls: "glass glass-translucent", name: "glass-translucent", note: "see-through" },
-  { cls: "glass glass-sm", name: "glass-sm", note: "less frost" },
 ];
 
 const CLASS_TABLE: [string, string][] = [
@@ -64,7 +56,10 @@ export default function Home() {
       <main id="top" className="relative mx-auto max-w-7xl px-5 pb-40 pt-24 sm:px-8">
 
         {/* ── HERO: Demo first ─────────────────────────────────────────── */}
-        <section className="pt-16">
+        <section className="relative pt-16">
+          {/* Faint radial gradient background anchor */}
+          <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[800px] w-[140vw] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.12)_0%,rgba(139,92,246,0.08)_30%,transparent_70%)] opacity-70" />
+
           <Reveal>
             <div className="mx-auto max-w-5xl">
               <HeroLens />
@@ -148,103 +143,98 @@ export default function Home() {
         </section>
 
         {/* ── SHAPES ─────────────────────────────────────────────────── */}
-        <section id="shapes" className="section-cv mt-32">
-          <Reveal>
-            <Label>Any shape</Label>
-            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
-              It follows the silhouette.
-            </h2>
-          </Reveal>
-          <Reveal delay={100}>
-            <div className="relative mt-10 flex flex-wrap items-center justify-center gap-8 overflow-hidden rounded-3xl px-6 py-14">
-              <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
-              {SHAPES.map((s) => (
-                <div key={s.label} className="relative flex flex-col items-center gap-3">
-                  <Glass
-                    tilt
-                    refract
-                    className={`grid place-items-center ${s.cls}`}
-                    style={s.style}
-                  />
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">
-                    {s.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
+        <section id="shapes" className="section-cv mt-40">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+            <Reveal className="lg:col-span-4">
+              <Label>Any shape</Label>
+              <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                It follows the silhouette.
+              </h2>
+              <p className="mt-4 text-sm text-white/40">
+                The specular edges, bloom, and displacement automatically trace the contour of the shape. From squircle to pill to custom SVG paths, the glass matches the edge perfectly.
+              </p>
+            </Reveal>
+            <Reveal delay={100} className="lg:col-span-8">
+              <div className="relative flex flex-wrap items-center justify-center gap-8 overflow-hidden rounded-[40px] px-6 py-16">
+                <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
+                {SHAPES.map((s) => (
+                  <div key={s.label} className="relative flex flex-col items-center gap-3">
+                    <Glass
+                      tilt
+                      refract
+                      className={`grid place-items-center ${s.cls}`}
+                      style={s.style}
+                    />
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">
+                      {s.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
         </section>
 
         {/* ── CONTROLS ───────────────────────────────────────────────── */}
-        <section className="section-cv mt-32">
-          <Reveal>
-            <Label>Real UI</Label>
-            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
-              Buttons, toggles, fields.
-            </h2>
-          </Reveal>
-          <Reveal delay={100}>
-            <div className="relative mt-10 overflow-hidden rounded-3xl px-6 py-12">
-              <img src="https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
-              <Controls />
-            </div>
-          </Reveal>
+        <section className="section-cv mt-40">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+            <Reveal delay={100} className="order-2 lg:order-1 lg:col-span-8">
+              <div className="relative flex min-h-[320px] items-center overflow-hidden rounded-[40px] px-8 py-16">
+                <img src="https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
+                <Controls />
+              </div>
+            </Reveal>
+            <Reveal className="order-1 lg:order-2 lg:col-span-4">
+              <Label>Real UI</Label>
+              <h2 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                Buttons, toggles, fields.
+              </h2>
+              <p className="mt-4 text-sm text-white/40">
+                Turn interactive controls into beautiful, tactile glass hardware.
+              </p>
+            </Reveal>
+          </div>
         </section>
 
         {/* ── MODIFIERS ──────────────────────────────────────────────── */}
-        <section className="section-cv mt-32">
+        <section className="section-cv mt-40">
           <Reveal>
             <Label>Modifiers</Label>
-            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
+            <h2 className="max-w-2xl text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
               One base, many moods.
             </h2>
           </Reveal>
-          <Reveal delay={100}>
-            <div className="relative mt-10 grid gap-3 overflow-hidden rounded-3xl p-5 sm:grid-cols-3">
-              <img src="https://images.unsplash.com/photo-1501862700950-18382cd41497?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
-              {MODIFIERS.map((m) => (
-                <div
-                  key={m.name}
-                  className={`${m.cls} relative grid h-28 place-items-center rounded-2xl text-center`}
-                >
-                  <div>
-                    <p className="font-mono text-[12px] text-white">{m.name}</p>
-                    <p className="mt-0.5 font-mono text-[10px] uppercase tracking-widest text-white/40">
-                      {m.note}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          <Reveal delay={100} className="mt-12">
+            <ModifiersShowcase />
           </Reveal>
         </section>
 
         {/* ── PLAYGROUND ─────────────────────────────────────────────── */}
-        <section id="playground" className="section-cv mt-32">
+        <section id="playground" className="section-cv mt-40">
           <Reveal>
             <Label>Live playground</Label>
-            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
+            <h2 className="max-w-xl text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
               Tune it. Copy it. Ship it.
             </h2>
-            <p className="mt-3 max-w-md text-sm text-white/40">
+            <p className="mt-6 max-w-md text-sm text-white/40">
               Every knob is a CSS custom property. Drag the sliders, copy the code.
             </p>
           </Reveal>
-          <Reveal delay={100} className="mt-10">
+          <Reveal delay={100} className="mt-12">
             <Playground />
           </Reveal>
         </section>
 
         {/* ── EFFECTS LAB ────────────────────────────────────────────── */}
-        <section className="section-cv mt-32">
+        <section className="section-cv mt-40">
           <Reveal>
             <Label>Effects lab</Label>
-            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
+            <h2 className="max-w-xl text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
               Modals, toasts, chrome.
             </h2>
           </Reveal>
-          <Reveal delay={100}>
-            <div className="relative mt-10 overflow-hidden rounded-3xl px-6 py-12">
+          <Reveal delay={100} className="mt-12">
+            <div className="relative overflow-hidden rounded-[40px] px-6 py-12">
               <img src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
               <EffectsLab />
             </div>
@@ -271,14 +261,14 @@ export default function Home() {
         </section>
 
         {/* ── INSTALL ────────────────────────────────────────────────── */}
-        <section id="install" className="section-cv mt-32">
+        <section id="install" className="section-cv mt-40">
           <Reveal>
             <Label>Install</Label>
-            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
+            <h2 className="max-w-xl text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
               Two lines, any stack.
             </h2>
           </Reveal>
-          <div className="mt-10 grid gap-4 lg:grid-cols-2">
+          <div className="mt-12 grid gap-4 lg:grid-cols-2">
             <Reveal>
               <CodeBlock
                 label="npm"

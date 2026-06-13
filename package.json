@@ -1,6 +1,6 @@
 {
   "name": "glassfx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Real-refraction glassmorphism for any element — backdrop lensing, chromatic dispersion, depth and a cursor-tracking bloom. Pure CSS + ~1KB JS, with graceful fallback. Framework-agnostic, plus optional React bindings.",
   "type": "module",
   "main": "./src/index.js",

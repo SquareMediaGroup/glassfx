@@ -209,7 +209,6 @@ function ensureCustomFilter(id, strength, dispersion) {
   const b = strength + dispersion;
 
   const markup = `
-<filter id="${id}" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
   <feGaussianBlur in="SourceAlpha" stdDeviation="16" result="soft"/>
   <feOffset in="soft" dx="8" dy="0" result="sxp"/>
   <feOffset in="soft" dx="-8" dy="0" result="sxn"/>
@@ -231,21 +230,26 @@ function ensureCustomFilter(id, strength, dispersion) {
   <feDisplacementMap in="SourceGraphic" in2="map" scale="${b}" xChannelSelector="R" yChannelSelector="G" result="dispB"/>
   <feColorMatrix in="dispB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="onlyB"/>
   <feBlend in="onlyR" in2="onlyG" mode="screen" result="rg"/>
-  <feBlend in="rg" in2="onlyB" mode="screen"/>
-</filter>`;
+  <feBlend in="rg" in2="onlyB" mode="screen"/>`;
 
-  const svg = document.createElementNS(SVG_NS, "svg");
-  svg.setAttribute("aria-hidden", "true");
-  svg.setAttribute("focusable", "false");
-  svg.setAttribute("width", "0");
-  svg.setAttribute("height", "0");
-  svg.style.cssText = "position:absolute;width:0;height:0;overflow:hidden";
-  svg.dataset.glassfx = "filter";
-  svg.innerHTML = markup;
+  let container = document.querySelector('svg[data-glassfx="filter"]');
+  if (!container) {
+    ensureFilter();
+    container = document.querySelector('svg[data-glassfx="filter"]');
+  }
 
-  const mount = () => document.body.appendChild(svg);
-  if (document.body) mount();
-  else document.addEventListener("DOMContentLoaded", mount, { once: true });
+  const filter = document.createElementNS(SVG_NS, "filter");
+  filter.id = id;
+  filter.setAttribute("x", "0");
+  filter.setAttribute("y", "0");
+  filter.setAttribute("width", "100%");
+  filter.setAttribute("height", "100%");
+  filter.setAttribute("color-interpolation-filters", "sRGB");
+  filter.innerHTML = markup;
+
+  if (container) {
+    container.appendChild(filter);
+  }
 }
 
 /**
@@ -254,6 +258,14 @@ function ensureCustomFilter(id, strength, dispersion) {
  */
 export function updateElementRefraction(el) {
   if (!isBrowser || !el || !el.classList.contains("glass-refract")) return;
+
+  const styleAttr = el.getAttribute("style") || "";
+  const hasCustomVars = styleAttr.includes("--glass-refract-strength") || styleAttr.includes("--glass-refract-dispersion");
+
+  // Fast path: skip expensive style recalculations if no variables are defined and default is active.
+  if (!hasCustomVars && el.__lastStrength === 48 && el.__lastDispersion === 6) {
+    return;
+  }
 
   const style = getComputedStyle(el);
   const strengthStr = style.getPropertyValue("--glass-refract-strength").trim();
@@ -301,7 +313,9 @@ export function initRefractionTracker() {
   const observer = new MutationObserver((mutations) => {
     for (const m of mutations) {
       if (m.type === "attributes") {
-        updateElementRefraction(m.target);
+        if (m.target.classList.contains("glass-refract")) {
+          updateElementRefraction(m.target);
+        }
       } else if (m.type === "childList") {
         m.addedNodes.forEach((node) => {
           if (node.nodeType === 1) {
