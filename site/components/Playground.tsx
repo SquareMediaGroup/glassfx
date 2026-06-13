@@ -82,6 +82,9 @@ export default function Playground() {
   const [bloomSize, setBloomSize] = useState(200);
   const [rim, setRim] = useState(0.5);
   const [radius, setRadius] = useState(28);
+  const [refractStrength, setRefractStrength] = useState(48);
+  const [refractDispersion, setRefractDispersion] = useState(6);
+  const [refractBlur, setRefractBlur] = useState(5);
   const [backdrop, setBackdrop] = useState<Backdrop>("stripes");
 
   const style = useMemo<CSSProperties>(
@@ -94,8 +97,11 @@ export default function Playground() {
         "--glass-bloom-size": `${bloomSize}px`,
         "--glass-rim": rim,
         "--glass-radius": `${radius}px`,
+        "--glass-refract-strength": refractStrength,
+        "--glass-refract-dispersion": refractDispersion,
+        "--glass-refract-blur": `${refractBlur}px`,
       }) as CSSProperties,
-    [tint, alpha, blur, bloom, bloomSize, rim, radius]
+    [tint, alpha, blur, bloom, bloomSize, rim, radius, refractStrength, refractDispersion, refractBlur]
   );
 
   const code = useMemo(
@@ -104,8 +110,8 @@ export default function Playground() {
         tint
       )};\n    --glass-alpha: ${alpha};\n    --glass-blur: ${blur}px;\n    --glass-bloom: ${hexToRgb(
         bloom
-      )};\n    --glass-bloom-size: ${bloomSize}px;\n    --glass-rim: ${rim};\n    --glass-radius: ${radius}px;\n  "\n>…</div>`,
-    [tint, alpha, blur, bloom, bloomSize, rim, radius]
+      )};\n    --glass-bloom-size: ${bloomSize}px;\n    --glass-rim: ${rim};\n    --glass-radius: ${radius}px;\n    --glass-refract-strength: ${refractStrength};\n    --glass-refract-dispersion: ${refractDispersion};\n    --glass-refract-blur: ${refractBlur}px;\n  "\n>…</div>`,
+    [tint, alpha, blur, bloom, bloomSize, rim, radius, refractStrength, refractDispersion, refractBlur]
   );
 
   return (
@@ -178,6 +184,9 @@ export default function Playground() {
             <Slider label="bloom size" value={bloomSize} min={60} max={400} step={10} unit="px" onChange={setBloomSize} />
             <Slider label="rim" value={rim} min={0} max={1} step={0.05} onChange={setRim} />
             <Slider label="radius" value={radius} min={0} max={120} step={2} unit="px" onChange={setRadius} />
+            <Slider label="refract strength" value={refractStrength} min={0} max={150} step={2} onChange={setRefractStrength} />
+            <Slider label="refract dispersion" value={refractDispersion} min={0} max={30} step={1} onChange={setRefractDispersion} />
+            <Slider label="refract blur" value={refractBlur} min={0} max={20} step={1} unit="px" onChange={setRefractBlur} />
           </div>
         </div>
         <CodeBlock code={code} label="your glass" />

@@ -18,7 +18,7 @@
  */
 
 import { createElement, useEffect, useMemo, useRef } from "react";
-import { ensureFilter, initBloomTracker, initTiltTracker } from "./index.js";
+import { ensureFilter, initBloomTracker, initRefractionTracker, initTiltTracker } from "./index.js";
 
 /**
  * Ensures the refraction filter is injected and the bloom tracker is running.
@@ -27,8 +27,12 @@ import { ensureFilter, initBloomTracker, initTiltTracker } from "./index.js";
 export function GlassFilter() {
   useEffect(() => {
     ensureFilter();
-    const stop = initBloomTracker();
-    return stop;
+    const stopBloom = initBloomTracker();
+    const stopRefract = initRefractionTracker();
+    return () => {
+      stopBloom();
+      stopRefract();
+    };
   }, []);
   return null;
 }
@@ -39,7 +43,12 @@ export function GlassFilter() {
 export function useGlass() {
   useEffect(() => {
     ensureFilter();
-    return initBloomTracker();
+    const stopBloom = initBloomTracker();
+    const stopRefract = initRefractionTracker();
+    return () => {
+      stopBloom();
+      stopRefract();
+    };
   }, []);
 }
 
