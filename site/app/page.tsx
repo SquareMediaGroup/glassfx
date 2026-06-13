@@ -89,7 +89,7 @@ export default function Home() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="#playground"
-                className="glass glass-strong glass-refract glass-pill px-7 py-3.5 text-sm font-semibold text-white transition hover:brightness-125"
+                className="glass glass-strong glass-pill px-7 py-3.5 text-sm font-semibold text-white transition hover:brightness-125"
               >
                 Try the playground
               </a>
@@ -109,7 +109,7 @@ export default function Home() {
         </section>
 
         {/* ── Pillars ──────────────────────────────────────────────────── */}
-        <section id="showcase" className="mt-32">
+        <section id="showcase" className="section-cv mt-32">
           <Reveal>
             <Eyebrow>What you get</Eyebrow>
             <h2 className="max-w-2xl text-4xl sm:text-5xl">
@@ -129,7 +129,7 @@ export default function Home() {
               </div>
             </Reveal>
             <Reveal delay={90}>
-              <div className="glass glass-strong glass-refract h-full rounded-3xl p-7">
+              <div className="glass glass-strong h-full rounded-3xl p-7">
                 <h3 className="text-2xl text-white">Depth</h3>
                 <p className="mt-2 text-sm text-haze/85">
                   A specular top edge, a lit gradient rim and a layered elevation
@@ -138,7 +138,7 @@ export default function Home() {
               </div>
             </Reveal>
             <Reveal delay={180}>
-              <div className="glass glass-strong glass-refract h-full rounded-3xl p-7">
+              <div className="glass glass-strong h-full rounded-3xl p-7">
                 <h3 className="text-2xl text-white">Bloom</h3>
                 <p className="mt-2 text-sm text-haze/85">
                   A soft specular hotspot follows your cursor across the surface,
@@ -151,7 +151,7 @@ export default function Home() {
         </section>
 
         {/* ── Shapes ───────────────────────────────────────────────────── */}
-        <section id="shapes" className="mt-32">
+        <section id="shapes" className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Any shape</Eyebrow>
             <h2 className="max-w-2xl text-4xl sm:text-5xl">
@@ -182,7 +182,7 @@ export default function Home() {
         </section>
 
         {/* ── Buttons & controls ───────────────────────────────────────── */}
-        <section className="mt-32">
+        <section className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Real UI</Eyebrow>
             <h2 className="max-w-2xl text-4xl sm:text-5xl">Buttons, toggles, fields.</h2>
@@ -202,7 +202,7 @@ export default function Home() {
         </section>
 
         {/* ── Modifier matrix ──────────────────────────────────────────── */}
-        <section className="mt-32">
+        <section className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Modifiers</Eyebrow>
             <h2 className="max-w-2xl text-4xl sm:text-5xl">One base, many moods.</h2>
@@ -228,7 +228,7 @@ export default function Home() {
         </section>
 
         {/* ── Playground ───────────────────────────────────────────────── */}
-        <section id="playground" className="mt-32">
+        <section id="playground" className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Live playground</Eyebrow>
             <h2 className="max-w-2xl text-4xl sm:text-5xl">Tune it. Copy it. Ship it.</h2>
@@ -243,7 +243,7 @@ export default function Home() {
         </section>
 
         {/* ── Effects lab ──────────────────────────────────────────────── */}
-        <section className="mt-32">
+        <section className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Effects lab</Eyebrow>
             <h2 className="max-w-2xl text-4xl sm:text-5xl">Modals, toasts, chrome.</h2>
@@ -284,7 +284,7 @@ export default function Home() {
         </section>
 
         {/* ── Install / code ───────────────────────────────────────────── */}
-        <section id="install" className="mt-32">
+        <section id="install" className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Install</Eyebrow>
             <h2 className="max-w-2xl text-4xl sm:text-5xl">Two lines, any stack.</h2>

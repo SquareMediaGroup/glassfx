@@ -26,7 +26,7 @@ export default function CodeBlock({
 
   return (
     <div
-      className={`glass glass-strong glass-refract overflow-hidden rounded-2xl ${className}`}
+      className={`glass glass-strong overflow-hidden rounded-2xl ${className}`}
     >
       <div className="flex items-center justify-between gap-4 border-b border-white/10 px-4 py-2.5">
         <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-haze-dim">

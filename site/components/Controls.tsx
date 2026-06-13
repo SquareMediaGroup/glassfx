@@ -17,7 +17,7 @@ export default function Controls() {
       </button>
       <button
         aria-label="Like"
-        className="glass glass-strong glass-refract grid h-12 w-12 place-items-center rounded-full text-white transition hover:brightness-125"
+        className="glass glass-strong grid h-12 w-12 place-items-center rounded-full text-white transition hover:brightness-125"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 21s-7.5-4.6-10-9.2C.4 8.6 2 5 5.5 5c2 0 3.4 1.2 4.5 2.6C11.1 6.2 12.5 5 14.5 5 18 5 19.6 8.6 22 11.8 19.5 16.4 12 21 12 21z" />

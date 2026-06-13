@@ -81,15 +81,6 @@ h3 {
   }
 }
 
-@keyframes spectral-hue {
-  0% {
-    filter: hue-rotate(0deg) saturate(1.15);
-  }
-  100% {
-    filter: hue-rotate(360deg) saturate(1.15);
-  }
-}
-
 @keyframes beam-sweep {
   0% {
     transform: translateX(-60%) skewX(-18deg);
@@ -150,10 +141,10 @@ h3 {
     radial-gradient(44% 50% at 50% 48%, var(--spectrum-6), transparent 66%);
   filter: saturate(1.25) brightness(1.05);
   opacity: 0.92;
-  animation:
-    spectral-drift 26s ease-in-out infinite,
-    spectral-hue 40s linear infinite;
-  will-change: transform, filter;
+  /* Only the transform drifts — the old hue-rotate animation forced a
+     full-screen filter repaint every frame and was the main source of jank. */
+  animation: spectral-drift 32s ease-in-out infinite;
+  will-change: transform;
 }
 
 .stage-grid {
@@ -218,6 +209,14 @@ h3 {
 
 .marquee-track {
   animation: marquee 28s linear infinite;
+}
+
+/* Skip rendering + painting off-screen sections (huge win when many heavy
+   backdrop-filter surfaces exist). The intrinsic size keeps the scrollbar
+   stable before a section is first painted. */
+.section-cv {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
 }
 
 /* Force the no-refraction fallback (for the "preview Safari/Firefox" toggle). */
