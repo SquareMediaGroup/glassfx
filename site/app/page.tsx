@@ -7,6 +7,7 @@ import Playground from "@/components/Playground";
 import EffectsLab from "@/components/EffectsLab";
 import FallbackToggle from "@/components/FallbackToggle";
 import CodeBlock from "@/components/CodeBlock";
+import { Glass } from "glassfx/react";
 
 const SHAPES: { label: string; cls: string; style?: React.CSSProperties }[] = [
   { label: "circle", cls: "rounded-full h-32 w-32" },
@@ -60,7 +61,7 @@ export default function Home() {
       <Backdrop />
       <Nav />
 
-      <main id="top" className="relative mx-auto max-w-6xl px-5 pb-32 pt-32 sm:px-8">
+      <main id="top" className="relative mx-auto max-w-6xl px-5 pb-40 pt-48 sm:px-8">
         {/* ── Hero ─────────────────────────────────────────────────────── */}
         <section className="pt-10">
           <Reveal>
@@ -69,10 +70,10 @@ export default function Home() {
             </p>
           </Reveal>
           <Reveal delay={80}>
-            <h1 className="mt-5 max-w-3xl text-[14vw] leading-[0.95] sm:text-[88px]">
+            <h1 className="mt-5 max-w-4xl text-[16vw] leading-[0.9] tracking-tighter sm:text-[110px]">
               Real glass.
               <br />
-              <span className="italic text-white">One class.</span>
+              <span className="italic text-[#ff3b30]">One class.</span>
             </h1>
           </Reveal>
           <Reveal delay={160}>
@@ -116,9 +117,9 @@ export default function Home() {
               Three things, none of them faked.
             </h2>
           </Reveal>
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-16 grid gap-5 md:grid-cols-3">
             <Reveal delay={0}>
-              <div className="glass glass-refract relative h-full overflow-hidden rounded-3xl p-7">
+              <Glass tilt refract className="relative h-full overflow-hidden rounded-3xl p-7">
                 <div className="stage-stripes absolute inset-0 -z-[1] opacity-70" />
                 <h3 className="text-2xl text-white">Refraction</h3>
                 <p className="mt-2 text-sm text-haze/85">
@@ -126,26 +127,26 @@ export default function Home() {
                   pushed apart for true chromatic dispersion. The stripes behind
                   this card bend — they aren&rsquo;t painted on.
                 </p>
-              </div>
+              </Glass>
             </Reveal>
-            <Reveal delay={90}>
-              <div className="glass glass-strong h-full rounded-3xl p-7">
+            <Reveal delay={90} className="md:mt-12">
+              <Glass tilt strong className="h-full rounded-3xl p-7">
                 <h3 className="text-2xl text-white">Depth</h3>
                 <p className="mt-2 text-sm text-haze/85">
                   A specular top edge, a lit gradient rim and a layered elevation
                   shadow give the surface real thickness — not a flat blur.
                 </p>
-              </div>
+              </Glass>
             </Reveal>
-            <Reveal delay={180}>
-              <div className="glass glass-strong h-full rounded-3xl p-7">
+            <Reveal delay={180} className="md:mt-24">
+              <Glass tilt strong className="h-full rounded-3xl p-7">
                 <h3 className="text-2xl text-white">Bloom</h3>
                 <p className="mt-2 text-sm text-haze/85">
                   A soft specular hotspot follows your cursor across the surface,
                   with a keyboard-focus equivalent. Hover this card and move
                   around.
                 </p>
-              </div>
+              </Glass>
             </Reveal>
           </div>
         </section>
@@ -168,8 +169,10 @@ export default function Home() {
               <div className="absolute inset-0 bg-black/15" />
               {SHAPES.map((s) => (
                 <div key={s.label} className="relative flex flex-col items-center gap-3">
-                  <div
-                    className={`glass glass-refract grid place-items-center ${s.cls}`}
+                  <Glass
+                    tilt
+                    refract
+                    className={`grid place-items-center ${s.cls}`}
                     style={s.style}
                   />
                   <span className="font-mono text-[11px] uppercase tracking-widest text-white/80">

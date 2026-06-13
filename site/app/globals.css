@@ -6,8 +6,8 @@
 
 /* ── Design tokens ─────────────────────────────────────────────────────── */
 @theme inline {
-  --color-ink: #06070a;
-  --color-ink-soft: #0b0e15;
+  --color-ink: #020203;
+  --color-ink-soft: #0a0a0c;
   --color-haze: #e8ecf6;
   --color-haze-dim: #9aa3b8;
   --font-display: var(--font-instrument), Georgia, serif;
@@ -128,19 +128,15 @@ h3 {
   }
 }
 
-/* The mesh — two stacked, counter-drifting spectral blobs. Larger, brighter
-   pools so the stage reads as living colour, not flat black. */
+/* The mesh — a singular, intense vermilion blob for an elegant, high-contrast atmosphere. */
 .stage-mesh {
   position: absolute;
   inset: -30%;
   background:
-    radial-gradient(48% 56% at 20% 26%, var(--spectrum-1), transparent 72%),
-    radial-gradient(46% 54% at 80% 20%, var(--spectrum-2), transparent 70%),
-    radial-gradient(56% 62% at 72% 76%, var(--spectrum-4), transparent 72%),
-    radial-gradient(52% 58% at 22% 78%, var(--spectrum-5), transparent 72%),
-    radial-gradient(44% 50% at 50% 48%, var(--spectrum-6), transparent 66%);
-  filter: saturate(1.25) brightness(1.05);
-  opacity: 0.92;
+    radial-gradient(40% 50% at 30% 30%, #ff3b30, transparent 70%),
+    radial-gradient(45% 55% at 70% 60%, #ff4d00, transparent 70%);
+  filter: saturate(1.3) brightness(1.1);
+  opacity: 0.85;
   /* Only the transform drifts — the old hue-rotate animation forced a
      full-screen filter repaint every frame and was the main source of jank. */
   animation: spectral-drift 32s ease-in-out infinite;
@@ -177,20 +173,19 @@ h3 {
 .stage-grain {
   position: absolute;
   inset: 0;
-  opacity: 0.05;
+  opacity: 0.12;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* High-frequency stripe field — used behind refraction demos so the bend +
-   colour fringing are unmistakable. */
+/* High-frequency stark stripe field — used behind refraction demos so the bend +
+   chromatic dispersion are unmistakable against the sharp luminance edges. */
 .stage-stripes {
   background-image: repeating-linear-gradient(
     66deg,
-    #ff5d3b 0 18px,
-    #2fa9ff 18px 36px,
-    #34e0a1 36px 54px,
-    #8b5cf6 54px 72px
+    #050505 0 10px,
+    #111 10px 20px,
+    #fff 20px 22px
   );
 }
 

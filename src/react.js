@@ -17,8 +17,8 @@
  * @license MIT
  */
 
-import { createElement, useEffect, useMemo } from "react";
-import { ensureFilter, initBloomTracker } from "./index.js";
+import { createElement, useEffect, useMemo, useRef } from "react";
+import { ensureFilter, initBloomTracker, initTiltTracker } from "./index.js";
 
 /**
  * Ensures the refraction filter is injected and the bloom tracker is running.
@@ -89,6 +89,7 @@ export function Glass(props) {
     translucent,
     size,
     className,
+    tilt,
     ...rest
   } = props;
 
@@ -98,7 +99,15 @@ export function Glass(props) {
     [refract, strong, pill, opaque, translucent, size, className]
   );
 
-  return createElement(as, { className: cls, ...rest });
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (tilt && ref.current) {
+      return initTiltTracker(ref.current);
+    }
+  }, [tilt]);
+
+  return createElement(as, { className: cls, ref, ...rest });
 }
 
 export default Glass;

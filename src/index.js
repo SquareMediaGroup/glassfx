@@ -47,7 +47,11 @@ const FILTER_MARKUP = `
   <feComposite in="syp" in2="syn" operator="arithmetic" k1="0" k2="-2.5" k3="2.5" k4="0.5" result="gy"/>
   <feColorMatrix in="gx" type="matrix" values="0 0 0 1 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0 1" result="mx"/>
   <feColorMatrix in="gy" type="matrix" values="0 0 0 0 0  0 0 0 1 0  0 0 0 0 0  0 0 0 0 1" result="my"/>
-  <feComposite in="mx" in2="my" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="map"/>
+  <feComposite in="mx" in2="my" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="base_map"/>
+  <feComponentTransfer in="base_map" result="map">
+    <feFuncR type="linear" slope="1.05" intercept="-0.025"/>
+    <feFuncG type="linear" slope="1.05" intercept="-0.025"/>
+  </feComponentTransfer>
   <feDisplacementMap in="SourceGraphic" in2="map" scale="42" xChannelSelector="R" yChannelSelector="G" result="dispR"/>
   <feColorMatrix in="dispR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="onlyR"/>
   <feDisplacementMap in="SourceGraphic" in2="map" scale="48" xChannelSelector="R" yChannelSelector="G" result="dispG"/>
@@ -131,6 +135,59 @@ export function initBloomTracker() {
 export function init() {
   ensureFilter();
   return initBloomTracker();
+}
+
+/**
+ * Start 3D hover tilt tracking for a specific element.
+ * Applies a lightweight CSS 3D perspective rotation based on pointer position.
+ * @param {HTMLElement} el The glass element to tilt.
+ * @returns {() => void} a teardown function.
+ */
+export function initTiltTracker(el) {
+  if (!isBrowser || !window.matchMedia || !window.matchMedia("(hover: hover)").matches) {
+    return () => {};
+  }
+  let raf = 0;
+
+  const onMove = (e) => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Calculate rotation (-6 to 6 degrees max)
+      const rotX = -((y - rect.height / 2) / (rect.height / 2)) * 6;
+      const rotY = ((x - rect.width / 2) / (rect.width / 2)) * 6;
+
+      el.style.transitionDuration = "0.1s";
+      el.style.transitionProperty = "transform";
+      el.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    });
+  };
+
+  const onLeave = () => {
+    if (raf) cancelAnimationFrame(raf);
+    raf = 0;
+    el.style.transitionDuration = "0.4s";
+    el.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+
+    setTimeout(() => {
+      el.style.transform = "";
+      el.style.transitionDuration = "";
+      el.style.transitionProperty = "";
+    }, 400);
+  };
+
+  el.addEventListener("pointermove", onMove, { passive: true });
+  el.addEventListener("pointerleave", onLeave, { passive: true });
+
+  return () => {
+    el.removeEventListener("pointermove", onMove);
+    el.removeEventListener("pointerleave", onLeave);
+    if (raf) cancelAnimationFrame(raf);
+  };
 }
 
 if (isBrowser) {
