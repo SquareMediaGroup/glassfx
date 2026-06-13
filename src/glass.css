@@ -27,6 +27,9 @@
   --glass-bloom-size: 200px;          /* cursor-bloom radius                 */
   --glass-sheen: 0.14;                /* diagonal top-left highlight         */
   --glass-rim: 0.5;                   /* lit-edge brightness (top)           */
+  --glass-refract-strength: 48;       /* mean refraction scale               */
+  --glass-refract-dispersion: 6;      /* chromatic aberration spread         */
+  --glass-refract-blur: 5px;          /* post-displacement blur              */
 
   position: relative;
   isolation: isolate;                 /* own stacking context for ::after    */
@@ -164,7 +167,7 @@
    whole filter). */
 @supports (backdrop-filter: url("#glassfx-refract")) {
   .glass-refract {
-    backdrop-filter: url(#glassfx-refract) blur(5px)
+    backdrop-filter: var(--glass-refract-id, url(#glassfx-refract)) blur(var(--glass-refract-blur, 5px))
       saturate(var(--glass-saturate)) brightness(var(--glass-brightness));
   }
 }

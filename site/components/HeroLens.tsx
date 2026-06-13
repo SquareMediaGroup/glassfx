@@ -65,8 +65,12 @@ export default function HeroLens() {
       ref={stageRef}
       className="relative h-[340px] w-full overflow-hidden rounded-3xl border border-white/[0.06] sm:h-[440px]"
     >
-      {/* High-contrast stripes for the lens to refract */}
-      <div className="stage-stripes absolute inset-0" />
+      {/* Vivid photograph for the lens to refract */}
+      <img
+        src="https://images.unsplash.com/photo-1550684376-efcbd6e3f031?w=1400&q=80&auto=format&fit=crop"
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover"
+      />
 
       {/* Large faint label */}
       <div className="pointer-events-none absolute inset-0 grid place-items-center">

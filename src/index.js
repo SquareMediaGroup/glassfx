@@ -128,13 +128,18 @@ export function initBloomTracker() {
 }
 
 /**
- * Initialise everything (filter + bloom tracker). Returns a teardown for the
- * tracker. Called automatically on import in the browser.
+ * Initialise everything (filter + bloom tracker + refraction tracker).
+ * Returns a teardown function for all trackers. Called automatically on import in the browser.
  * @returns {() => void}
  */
 export function init() {
   ensureFilter();
-  return initBloomTracker();
+  const stopBloom = initBloomTracker();
+  const stopRefract = initRefractionTracker();
+  return () => {
+    stopBloom();
+    stopRefract();
+  };
 }
 
 /**
@@ -187,6 +192,141 @@ export function initTiltTracker(el) {
     el.removeEventListener("pointermove", onMove);
     el.removeEventListener("pointerleave", onLeave);
     if (raf) cancelAnimationFrame(raf);
+  };
+}
+
+/**
+ * Ensure a custom refraction filter is generated and injected.
+ * @param {string} id Unique filter ID.
+ * @param {number} strength Mean refraction strength (scale).
+ * @param {number} dispersion Chromatic dispersion spread.
+ */
+function ensureCustomFilter(id, strength, dispersion) {
+  if (!isBrowser || document.getElementById(id)) return;
+
+  const r = strength - dispersion;
+  const g = strength;
+  const b = strength + dispersion;
+
+  const markup = `
+<filter id="${id}" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+  <feGaussianBlur in="SourceAlpha" stdDeviation="16" result="soft"/>
+  <feOffset in="soft" dx="8" dy="0" result="sxp"/>
+  <feOffset in="soft" dx="-8" dy="0" result="sxn"/>
+  <feComposite in="sxp" in2="sxn" operator="arithmetic" k1="0" k2="-2.5" k3="2.5" k4="0.5" result="gx"/>
+  <feOffset in="soft" dx="0" dy="8" result="syp"/>
+  <feOffset in="soft" dx="0" dy="-8" result="syn"/>
+  <feComposite in="syp" in2="syn" operator="arithmetic" k1="0" k2="-2.5" k3="2.5" k4="0.5" result="gy"/>
+  <feColorMatrix in="gx" type="matrix" values="0 0 0 1 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0 1" result="mx"/>
+  <feColorMatrix in="gy" type="matrix" values="0 0 0 0 0  0 0 0 1 0  0 0 0 0 0  0 0 0 0 1" result="my"/>
+  <feComposite in="mx" in2="my" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="base_map"/>
+  <feComponentTransfer in="base_map" result="map">
+    <feFuncR type="linear" slope="1.05" intercept="-0.025"/>
+    <feFuncG type="linear" slope="1.05" intercept="-0.025"/>
+  </feComponentTransfer>
+  <feDisplacementMap in="SourceGraphic" in2="map" scale="${r}" xChannelSelector="R" yChannelSelector="G" result="dispR"/>
+  <feColorMatrix in="dispR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="onlyR"/>
+  <feDisplacementMap in="SourceGraphic" in2="map" scale="${g}" xChannelSelector="R" yChannelSelector="G" result="dispG"/>
+  <feColorMatrix in="dispG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="onlyG"/>
+  <feDisplacementMap in="SourceGraphic" in2="map" scale="${b}" xChannelSelector="R" yChannelSelector="G" result="dispB"/>
+  <feColorMatrix in="dispB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="onlyB"/>
+  <feBlend in="onlyR" in2="onlyG" mode="screen" result="rg"/>
+  <feBlend in="rg" in2="onlyB" mode="screen"/>
+</filter>`;
+
+  const svg = document.createElementNS(SVG_NS, "svg");
+  svg.setAttribute("aria-hidden", "true");
+  svg.setAttribute("focusable", "false");
+  svg.setAttribute("width", "0");
+  svg.setAttribute("height", "0");
+  svg.style.cssText = "position:absolute;width:0;height:0;overflow:hidden";
+  svg.dataset.glassfx = "filter";
+  svg.innerHTML = markup;
+
+  const mount = () => document.body.appendChild(svg);
+  if (document.body) mount();
+  else document.addEventListener("DOMContentLoaded", mount, { once: true });
+}
+
+/**
+ * Check custom variables on a .glass-refract element and dynamically apply a custom SVG filter.
+ * @param {HTMLElement} el The glass element.
+ */
+export function updateElementRefraction(el) {
+  if (!isBrowser || !el || !el.classList.contains("glass-refract")) return;
+
+  const style = getComputedStyle(el);
+  const strengthStr = style.getPropertyValue("--glass-refract-strength").trim();
+  const dispersionStr = style.getPropertyValue("--glass-refract-dispersion").trim();
+
+  const strength = strengthStr ? parseFloat(strengthStr) : 48;
+  const dispersion = dispersionStr ? parseFloat(dispersionStr) : 6;
+
+  // Optimise layout/rendering: avoid redundant DOM/style changes if values haven't changed.
+  if (el.__lastStrength === strength && el.__lastDispersion === dispersion) {
+    return;
+  }
+
+  el.__lastStrength = strength;
+  el.__lastDispersion = dispersion;
+
+  if (strength === 48 && dispersion === 6) {
+    el.style.removeProperty("--glass-refract-id");
+    return;
+  }
+
+  const filterId = `glassfx-refract-${strength}-${dispersion}`;
+  ensureCustomFilter(filterId, strength, dispersion);
+  el.style.setProperty("--glass-refract-id", `url(#${filterId})`);
+}
+
+let refractionObserver = null;
+
+/**
+ * Watch for added or updated lensed glass elements and ensure they have custom filters applied.
+ * @returns {() => void} stop observer teardown.
+ */
+export function initRefractionTracker() {
+  if (!isBrowser) return () => {};
+  if (refractionObserver) return () => {};
+
+  // Initial scan on call
+  const scan = () => {
+    document.querySelectorAll(".glass-refract").forEach(updateElementRefraction);
+  };
+  
+  if (document.body) scan();
+  else document.addEventListener("DOMContentLoaded", scan, { once: true });
+
+  const observer = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      if (m.type === "attributes") {
+        updateElementRefraction(m.target);
+      } else if (m.type === "childList") {
+        m.addedNodes.forEach((node) => {
+          if (node.nodeType === 1) {
+            if (node.classList.contains("glass-refract")) {
+              updateElementRefraction(node);
+            }
+            node.querySelectorAll(".glass-refract").forEach(updateElementRefraction);
+          }
+        });
+      }
+    }
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ["style", "class"],
+  });
+
+  refractionObserver = observer;
+
+  return () => {
+    observer.disconnect();
+    refractionObserver = null;
   };
 }
 

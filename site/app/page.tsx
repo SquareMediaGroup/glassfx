@@ -107,7 +107,7 @@ export default function Home() {
             {/* Large refraction card */}
             <Reveal className="md:col-span-8">
               <Glass tilt refract className="relative flex h-[480px] flex-col justify-end overflow-hidden rounded-3xl p-10">
-                <div className="stage-stripes absolute inset-0 -z-[1]" />
+                <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
                 <div className="relative">
                   <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">
                     Refraction
@@ -125,7 +125,8 @@ export default function Home() {
             {/* Stacked right column */}
             <div className="flex flex-col gap-4 md:col-span-4">
               <Reveal delay={80}>
-                <Glass tilt strong className="flex h-[230px] flex-col justify-end rounded-3xl p-8">
+                <Glass tilt strong className="relative flex h-[230px] flex-col justify-end overflow-hidden rounded-3xl p-8">
+                  <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
                   <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">Depth</p>
                   <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">
                     Specular edges, real shadow.
@@ -133,7 +134,8 @@ export default function Home() {
                 </Glass>
               </Reveal>
               <Reveal delay={160}>
-                <Glass tilt strong className="flex h-[230px] flex-col justify-end rounded-3xl p-8">
+                <Glass tilt strong className="relative flex h-[230px] flex-col justify-end overflow-hidden rounded-3xl p-8">
+                  <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
                   <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">Bloom</p>
                   <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">
                     Cursor-tracking hotspot.
@@ -154,7 +156,8 @@ export default function Home() {
             </h2>
           </Reveal>
           <Reveal delay={100}>
-            <div className="relative mt-10 flex flex-wrap items-center justify-center gap-8 overflow-hidden rounded-3xl border border-white/[0.06] bg-white/[0.02] px-6 py-14">
+            <div className="relative mt-10 flex flex-wrap items-center justify-center gap-8 overflow-hidden rounded-3xl px-6 py-14">
+              <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
               {SHAPES.map((s) => (
                 <div key={s.label} className="relative flex flex-col items-center gap-3">
                   <Glass
@@ -181,7 +184,8 @@ export default function Home() {
             </h2>
           </Reveal>
           <Reveal delay={100}>
-            <div className="relative mt-10 overflow-hidden rounded-3xl border border-white/[0.06] bg-white/[0.02] px-6 py-12">
+            <div className="relative mt-10 overflow-hidden rounded-3xl px-6 py-12">
+              <img src="https://images.unsplash.com/photo-1557682250-33bd709cbe85?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
               <Controls />
             </div>
           </Reveal>
@@ -196,7 +200,8 @@ export default function Home() {
             </h2>
           </Reveal>
           <Reveal delay={100}>
-            <div className="relative mt-10 grid gap-3 overflow-hidden rounded-3xl border border-white/[0.06] bg-white/[0.02] p-5 sm:grid-cols-3">
+            <div className="relative mt-10 grid gap-3 overflow-hidden rounded-3xl p-5 sm:grid-cols-3">
+              <img src="https://images.unsplash.com/photo-1501862700950-18382cd41497?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
               {MODIFIERS.map((m) => (
                 <div
                   key={m.name}
@@ -239,7 +244,8 @@ export default function Home() {
             </h2>
           </Reveal>
           <Reveal delay={100}>
-            <div className="relative mt-10 overflow-hidden rounded-3xl border border-white/[0.06] bg-white/[0.02] px-6 py-12">
+            <div className="relative mt-10 overflow-hidden rounded-3xl px-6 py-12">
+              <img src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
               <EffectsLab />
             </div>
           </Reveal>
