@@ -10,15 +10,11 @@ const LINKS = [
 export default function Nav() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
-      <nav className="glass glass-strong glass-pill pointer-events-auto flex items-center gap-1 py-1.5 pl-3 pr-1.5">
+      <nav className="glass glass-strong glass-refract glass-pill pointer-events-auto flex items-center gap-1 py-1.5 pl-3 pr-1.5">
         <a
           href="#top"
           className="flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold tracking-tight text-white"
         >
-          <span
-            className="inline-block h-2.5 w-2.5 rounded-full bg-white"
-            style={{ boxShadow: "0 0 8px rgba(255,255,255,0.6)" }}
-          />
           GlassFX
         </a>
         <span className="mx-1 hidden h-4 w-px bg-white/15 sm:block" />
