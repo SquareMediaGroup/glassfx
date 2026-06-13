@@ -19,6 +19,7 @@ export function glassClassName(opts?: GlassModifierProps): string;
 export type GlassProps = GlassModifierProps & {
   as?: ElementType;
   children?: ReactNode;
+  tilt?: boolean;
 } & Record<string, unknown>;
 
 export const Glass: ComponentType<GlassProps>;

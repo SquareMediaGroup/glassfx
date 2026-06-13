@@ -1,27 +1,17 @@
 @import "tailwindcss";
 
-/* glassfx — the package's own styles. Every glass surface on this site uses
-   these classes; the site is its own integration test. */
+/* glassfx — the package's own styles. */
 @import "glassfx/glass.css";
 
 /* ── Design tokens ─────────────────────────────────────────────────────── */
 @theme inline {
-  --color-ink: #020203;
-  --color-ink-soft: #0a0a0c;
-  --color-haze: #e8ecf6;
-  --color-haze-dim: #9aa3b8;
+  --color-ink: #000000;
+  --color-ink-soft: #0a0a0a;
+  --color-haze: #e0e0e0;
+  --color-haze-dim: #666666;
   --font-display: var(--font-inter), system-ui, sans-serif;
   --font-body: var(--font-inter), system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
-}
-
-:root {
-  --spectrum-1: #ff5d3b; /* warm */
-  --spectrum-2: #ffb23b;
-  --spectrum-3: #34e0a1; /* green */
-  --spectrum-4: #2fa9ff; /* blue */
-  --spectrum-5: #8b5cf6; /* violet */
-  --spectrum-6: #ff4d8d; /* magenta */
 }
 
 * {
@@ -30,13 +20,11 @@
 
 html {
   scroll-behavior: smooth;
-  background: var(--color-ink);
+  background: #000;
 }
 
 body {
   margin: 0;
-  /* transparent so the fixed -z-10 Backdrop (spectral stage) shows through;
-     html carries the base ink colour. */
   background: transparent;
   color: var(--color-haze);
   font-family: var(--font-body);
@@ -46,150 +34,65 @@ body {
 }
 
 ::selection {
-  background: var(--spectrum-4);
-  color: #fff;
+  background: #fff;
+  color: #000;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
   font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
 }
 
-.font-display {
-  font-family: var(--font-display);
-}
-.font-mono {
-  font-family: var(--font-mono);
-}
+.font-display { font-family: var(--font-display); }
+.font-mono { font-family: var(--font-mono); }
 
-/* ── Atmosphere: the living spectral stage ─────────────────────────────────
-   Layered conic/radial meshes drift slowly; a fine grid and grain sit on top.
-   This is the bright, high-frequency content the glass refracts. */
-@keyframes spectral-drift {
-  0% {
-    transform: translate3d(-4%, -2%, 0) rotate(0deg) scale(1.25);
-  }
-  50% {
-    transform: translate3d(4%, 3%, 0) rotate(8deg) scale(1.4);
-  }
-  100% {
-    transform: translate3d(-4%, -2%, 0) rotate(0deg) scale(1.25);
-  }
-}
-
-@keyframes beam-sweep {
-  0% {
-    transform: translateX(-60%) skewX(-18deg);
-    opacity: 0;
-  }
-  12% {
-    opacity: 0.5;
-  }
-  40% {
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(160%) skewX(-18deg);
-    opacity: 0;
-  }
-}
-
+/* ── Animations ────────────────────────────────────────────────────────── */
 @keyframes float-soft {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
 @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
 
 @keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* The mesh — a singular, intense vermilion blob for an elegant, high-contrast atmosphere. */
-.stage-mesh {
-  position: absolute;
-  inset: -30%;
-  background:
-    radial-gradient(40% 50% at 30% 30%, #ff3b30, transparent 70%),
-    radial-gradient(45% 55% at 70% 60%, #ff4d00, transparent 70%);
-  filter: saturate(1.3) brightness(1.1);
-  opacity: 0.85;
-  /* Only the transform drifts — the old hue-rotate animation forced a
-     full-screen filter repaint every frame and was the main source of jank. */
-  animation: spectral-drift 32s ease-in-out infinite;
-  will-change: transform;
-}
-
+/* ── Dot grid backdrop ─────────────────────────────────────────────────── */
 .stage-grid {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 54px 54px;
-  mask-image: radial-gradient(120% 100% at 50% 0%, #000 35%, transparent 78%);
+    radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
-.stage-beam {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 28%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.16),
-    transparent
-  );
-  filter: blur(6px);
-  animation: beam-sweep 11s ease-in-out infinite;
-  mix-blend-mode: screen;
-}
-
-/* Grain overlay for texture/depth. */
+/* Grain overlay — very subtle film texture */
 .stage-grain {
   position: absolute;
   inset: 0;
-  opacity: 0.12;
+  opacity: 0.04;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* High-frequency stark stripe field — used behind refraction demos so the bend +
-   chromatic dispersion are unmistakable against the sharp luminance edges. */
+/* High-contrast content behind refraction demos — use a photo or image,
+   but we keep simple high-frequency stripes for the demo. */
 .stage-stripes {
   background-image: repeating-linear-gradient(
-    66deg,
-    #050505 0 10px,
-    #111 10px 20px,
-    #fff 20px 22px
+    135deg,
+    #fff 0 2px,
+    #000 2px 20px
   );
 }
 
-/* Section reveal on scroll (paired with IntersectionObserver). */
+/* Section reveal on scroll */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -206,15 +109,12 @@ h3 {
   animation: marquee 28s linear infinite;
 }
 
-/* Skip rendering + painting off-screen sections (huge win when many heavy
-   backdrop-filter surfaces exist). The intrinsic size keeps the scrollbar
-   stable before a section is first painted. */
 .section-cv {
   content-visibility: auto;
   contain-intrinsic-size: auto 700px;
 }
 
-/* Force the no-refraction fallback (for the "preview Safari/Firefox" toggle). */
+/* Force the no-refraction fallback (for the preview toggle). */
 .force-fallback .glass-refract {
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
     brightness(var(--glass-brightness)) !important;
@@ -222,7 +122,7 @@ h3 {
     brightness(var(--glass-brightness)) !important;
 }
 
-/* Pretty range inputs for the playground. */
+/* Range inputs for the playground. */
 input[type="range"].glass-range {
   -webkit-appearance: none;
   appearance: none;
@@ -237,7 +137,7 @@ input[type="range"].glass-range::-webkit-slider-thumb {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: var(--color-haze);
+  background: #fff;
   cursor: pointer;
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12);
 }
@@ -246,13 +146,11 @@ input[type="range"].glass-range::-moz-range-thumb {
   height: 16px;
   border: 0;
   border-radius: 50%;
-  background: var(--color-haze);
+  background: #fff;
   cursor: pointer;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage-mesh,
-  .stage-beam,
   .animate-float,
   .marquee-track {
     animation: none !important;

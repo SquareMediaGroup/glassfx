@@ -7,8 +7,14 @@
   "module": "./src/index.js",
   "types": "./src/index.d.ts",
   "exports": {
-    ".": "./src/index.js",
-    "./react": "./src/react.js",
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./react": {
+      "types": "./src/react.d.ts",
+      "default": "./src/react.js"
+    },
     "./glass.css": "./src/glass.css",
     "./css": "./src/glass.css",
     "./package.json": "./package.json"
@@ -28,6 +34,9 @@
   "scripts": {
     "demo": "python3 -m http.server 8080",
     "build": "npm run build --workspace site"
+  },
+  "overrides": {
+    "postcss": "^8.5.15"
   },
   "keywords": [
     "glassmorphism",
@@ -59,5 +68,8 @@
   "homepage": "https://github.com/SquareMediaGroup/glassfx#readme",
   "bugs": {
     "url": "https://github.com/SquareMediaGroup/glassfx/issues"
+  },
+  "dependencies": {
+    "glassfx": "^0.1.0"
   }
 }

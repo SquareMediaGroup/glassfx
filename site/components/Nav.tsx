@@ -1,7 +1,7 @@
 "use client";
 
 const LINKS = [
-  { label: "Showcase", href: "#showcase" },
+  { label: "Demo", href: "#demo" },
   { label: "Shapes", href: "#shapes" },
   { label: "Playground", href: "#playground" },
   { label: "Install", href: "#install" },
@@ -10,18 +10,14 @@ const LINKS = [
 export default function Nav() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
-      <nav className="glass glass-strong glass-pill pointer-events-auto flex items-center gap-1 py-1.5 pl-2 pr-1.5">
+      <nav className="glass glass-strong glass-pill pointer-events-auto flex items-center gap-1 py-1.5 pl-3 pr-1.5">
         <a
           href="#top"
-          className="flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold tracking-tight"
+          className="flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold tracking-tight text-white"
         >
           <span
-            className="inline-block h-3.5 w-3.5 rounded-[5px]"
-            style={{
-              background:
-                "conic-gradient(from 210deg, #ff5d3b, #ffb23b, #34e0a1, #2fa9ff, #8b5cf6, #ff5d3b)",
-              boxShadow: "0 0 12px rgba(255,255,255,0.4)",
-            }}
+            className="inline-block h-2.5 w-2.5 rounded-full bg-white"
+            style={{ boxShadow: "0 0 8px rgba(255,255,255,0.6)" }}
           />
           GlassFX
         </a>
@@ -31,7 +27,7 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="rounded-full px-3.5 py-1.5 text-sm text-haze/80 transition-colors hover:text-white"
+              className="rounded-full px-3.5 py-1.5 text-sm text-white/60 transition-colors hover:text-white"
             >
               {l.label}
             </a>

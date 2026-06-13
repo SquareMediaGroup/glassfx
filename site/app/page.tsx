@@ -1,4 +1,3 @@
-import Backdrop from "@/components/Backdrop";
 import Nav from "@/components/Nav";
 import HeroLens from "@/components/HeroLens";
 import Reveal from "@/components/Reveal";
@@ -7,6 +6,7 @@ import Playground from "@/components/Playground";
 import EffectsLab from "@/components/EffectsLab";
 import FallbackToggle from "@/components/FallbackToggle";
 import CodeBlock from "@/components/CodeBlock";
+import Backdrop from "@/components/Backdrop";
 import { Glass } from "glassfx/react";
 
 const SHAPES: { label: string; cls: string; style?: React.CSSProperties }[] = [
@@ -29,9 +29,9 @@ const SHAPES: { label: string; cls: string; style?: React.CSSProperties }[] = [
 ];
 
 const MODIFIERS = [
-  { cls: "glass", name: "glass", note: "the base material" },
+  { cls: "glass", name: "glass", note: "base material" },
   { cls: "glass glass-refract", name: "glass-refract", note: "real lensing" },
-  { cls: "glass glass-strong", name: "glass-strong", note: "frosted dark slab" },
+  { cls: "glass glass-strong", name: "glass-strong", note: "frosted slab" },
   { cls: "glass glass-strong glass-opaque", name: "glass-opaque", note: "near-solid" },
   { cls: "glass glass-translucent", name: "glass-translucent", note: "see-through" },
   { cls: "glass glass-sm", name: "glass-sm", note: "less frost" },
@@ -47,9 +47,9 @@ const CLASS_TABLE: [string, string][] = [
   ["glass-translucent", "Lighter, more see-through fill."],
 ];
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
+function Label({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.3em] text-haze-dim">
+    <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.25em] text-white/40">
       {children}
     </p>
   );
@@ -61,106 +61,100 @@ export default function Home() {
       <Backdrop />
       <Nav />
 
-      <main id="top" className="relative mx-auto max-w-6xl px-5 pb-40 pt-48 sm:px-8">
-        {/* ── Hero ─────────────────────────────────────────────────────── */}
-        <section className="pt-20 text-center">
+      <main id="top" className="relative mx-auto max-w-7xl px-5 pb-40 pt-24 sm:px-8">
+
+        {/* ── HERO: Demo first ─────────────────────────────────────────── */}
+        <section className="pt-16">
           <Reveal>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-haze-dim">
-              MIT · ~1KB · drop-in · zero deps
-            </p>
-          </Reveal>
-          <Reveal delay={80}>
-            <h1 className="mx-auto mt-6 max-w-5xl text-[14vw] font-semibold leading-[1.05] tracking-tighter text-white sm:text-[110px]">
-              Pro glass.
-              <br />
-              <span className="bg-gradient-to-r from-gray-400 to-gray-600 bg-clip-text text-transparent">
-                Zero bloat.
-              </span>
-            </h1>
-          </Reveal>
-          <Reveal delay={160}>
-            <p className="mx-auto mt-8 max-w-xl text-lg text-haze/80">
-              GlassFX bends light for real — refraction, chromatic dispersion,
-              depth and a cursor-tracking bloom. Add{" "}
-              <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[13px]">
-                glass
-              </code>{" "}
-              to any element. That&rsquo;s the whole API.
-            </p>
-          </Reveal>
-          <Reveal delay={240}>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-              <a
-                href="#showcase"
-                className="glass glass-strong glass-pill px-8 py-4 text-[15px] font-medium text-white transition hover:brightness-125"
-              >
-                See the features
-              </a>
-              <div className="glass glass-pill flex items-center gap-3 px-6 py-4 font-mono text-[14px] text-haze">
-                <span className="text-haze-dim">$</span> npm i glassfx
-              </div>
+            <div className="mx-auto max-w-5xl">
+              <HeroLens />
             </div>
           </Reveal>
 
-          <div className="mx-auto mt-20 max-w-5xl">
-            <HeroLens />
-          </div>
-        </section>
-
-        {/* ── Pillars ──────────────────────────────────────────────────── */}
-        <section id="showcase" className="section-cv mt-40">
-          <Reveal>
-            <Eyebrow>What you get</Eyebrow>
-            <h2 className="max-w-2xl text-5xl font-medium tracking-tight text-white sm:text-6xl">
-              Three things, none of them faked.
-            </h2>
+          <Reveal delay={100}>
+            <div className="mx-auto mt-14 max-w-2xl text-center">
+              <h1 className="text-5xl font-semibold tracking-tight text-white sm:text-7xl">
+                GlassFX
+              </h1>
+              <p className="mt-4 text-lg text-white/50">
+                Real refraction, chromatic dispersion, depth &amp; bloom.<br />
+                One class. ~1 KB. Zero dependencies.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <div className="glass glass-strong glass-pill flex items-center gap-3 px-6 py-3 font-mono text-[14px] text-white/80">
+                  <span className="text-white/30">$</span> npm i glassfx
+                </div>
+                <a
+                  href="https://github.com/SquareMediaGroup/glassfx"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="glass glass-pill px-6 py-3 text-[14px] font-medium text-white/80 transition hover:text-white"
+                >
+                  View on GitHub →
+                </a>
+              </div>
+            </div>
           </Reveal>
-          <div className="mt-16 grid gap-6 md:grid-cols-12 md:grid-rows-2">
-            <Reveal delay={0} className="md:col-span-8 md:row-span-2">
-              <Glass tilt refract className="relative flex h-[600px] flex-col justify-end overflow-hidden rounded-[40px] p-12">
-                <div className="stage-stripes absolute inset-0 -z-[1] opacity-70" />
-                <h3 className="text-4xl font-semibold tracking-tight text-white">Refraction</h3>
-                <p className="mt-3 max-w-md text-lg text-haze/85">
-                  An SVG displacement lens warps the actual backdrop, with R/G/B
-                  pushed apart for true chromatic dispersion.
-                </p>
+        </section>
+
+        {/* ── DEMO GRID: The effect speaks ────────────────────────────── */}
+        <section id="demo" className="section-cv mt-40">
+          <Reveal>
+            <Label>The effect</Label>
+          </Reveal>
+
+          <div className="grid gap-4 md:grid-cols-12">
+            {/* Large refraction card */}
+            <Reveal className="md:col-span-8">
+              <Glass tilt refract className="relative flex h-[480px] flex-col justify-end overflow-hidden rounded-3xl p-10">
+                <div className="stage-stripes absolute inset-0 -z-[1]" />
+                <div className="relative">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">
+                    Refraction
+                  </p>
+                  <h2 className="mt-2 text-3xl font-semibold tracking-tight text-white">
+                    Light actually bends.
+                  </h2>
+                  <p className="mt-2 max-w-sm text-sm text-white/50">
+                    SVG displacement warps the backdrop with R/G/B pushed apart — real chromatic dispersion, not a blurred overlay.
+                  </p>
+                </div>
               </Glass>
             </Reveal>
-            <Reveal delay={90} className="md:col-span-4 md:row-span-1">
-              <Glass tilt strong className="flex h-[288px] flex-col justify-end rounded-[40px] p-10">
-                <h3 className="text-3xl font-semibold tracking-tight text-white">Depth</h3>
-                <p className="mt-2 text-base text-haze/85">
-                  A specular top edge and rim give the surface real thickness.
-                </p>
-              </Glass>
-            </Reveal>
-            <Reveal delay={180} className="md:col-span-4 md:row-span-1">
-              <Glass tilt strong className="flex h-[288px] flex-col justify-end rounded-[40px] p-10">
-                <h3 className="text-3xl font-semibold tracking-tight text-white">Bloom</h3>
-                <p className="mt-2 text-base text-haze/85">
-                  A soft hotspot follows your cursor across the surface.
-                </p>
-              </Glass>
-            </Reveal>
+
+            {/* Stacked right column */}
+            <div className="flex flex-col gap-4 md:col-span-4">
+              <Reveal delay={80}>
+                <Glass tilt strong className="flex h-[230px] flex-col justify-end rounded-3xl p-8">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">Depth</p>
+                  <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">
+                    Specular edges, real shadow.
+                  </h3>
+                </Glass>
+              </Reveal>
+              <Reveal delay={160}>
+                <Glass tilt strong className="flex h-[230px] flex-col justify-end rounded-3xl p-8">
+                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">Bloom</p>
+                  <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">
+                    Cursor-tracking hotspot.
+                  </h3>
+                  <p className="mt-1 text-sm text-white/40">Hover this card.</p>
+                </Glass>
+              </Reveal>
+            </div>
           </div>
         </section>
 
-        {/* ── Shapes ───────────────────────────────────────────────────── */}
+        {/* ── SHAPES ─────────────────────────────────────────────────── */}
         <section id="shapes" className="section-cv mt-32">
           <Reveal>
-            <Eyebrow>Any shape</Eyebrow>
-            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">
+            <Label>Any shape</Label>
+            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
               It follows the silhouette.
             </h2>
-            <p className="mt-4 max-w-xl text-haze/75">
-              The rim and bloom inherit the border-radius — or any{" "}
-              <code className="font-mono text-[13px]">clip-path</code>. Circles,
-              pills, squircles, blobs, polygons.
-            </p>
           </Reveal>
-          <Reveal delay={120}>
-            <div className="stage-stripes relative mt-10 flex flex-wrap items-center justify-center gap-8 overflow-hidden rounded-3xl px-6 py-14">
-              <div className="absolute inset-0 bg-black/15" />
+          <Reveal delay={100}>
+            <div className="relative mt-10 flex flex-wrap items-center justify-center gap-8 overflow-hidden rounded-3xl border border-white/[0.06] bg-white/[0.02] px-6 py-14">
               {SHAPES.map((s) => (
                 <div key={s.label} className="relative flex flex-col items-center gap-3">
                   <Glass
@@ -169,7 +163,7 @@ export default function Home() {
                     className={`grid place-items-center ${s.cls}`}
                     style={s.style}
                   />
-                  <span className="font-mono text-[11px] uppercase tracking-widest text-white/80">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-white/40">
                     {s.label}
                   </span>
                 </div>
@@ -178,43 +172,39 @@ export default function Home() {
           </Reveal>
         </section>
 
-        {/* ── Buttons & controls ───────────────────────────────────────── */}
+        {/* ── CONTROLS ───────────────────────────────────────────────── */}
         <section className="section-cv mt-32">
           <Reveal>
-            <Eyebrow>Real UI</Eyebrow>
-            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">Buttons, toggles, fields.</h2>
-            <p className="mt-4 max-w-xl text-haze/75">
-              Not just decoration — usable controls with the bloom on hover and
-              focus. Every element below is plain markup plus a glass class.
-            </p>
+            <Label>Real UI</Label>
+            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
+              Buttons, toggles, fields.
+            </h2>
           </Reveal>
-          <Reveal delay={120}>
-            <div className="stage-stripes relative mt-10 overflow-hidden rounded-3xl px-6 py-12">
-              <div className="absolute inset-0 bg-black/20" />
-              <div className="relative">
-                <Controls />
-              </div>
+          <Reveal delay={100}>
+            <div className="relative mt-10 overflow-hidden rounded-3xl border border-white/[0.06] bg-white/[0.02] px-6 py-12">
+              <Controls />
             </div>
           </Reveal>
         </section>
 
-        {/* ── Modifier matrix ──────────────────────────────────────────── */}
+        {/* ── MODIFIERS ──────────────────────────────────────────────── */}
         <section className="section-cv mt-32">
           <Reveal>
-            <Eyebrow>Modifiers</Eyebrow>
-            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">One base, many moods.</h2>
+            <Label>Modifiers</Label>
+            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
+              One base, many moods.
+            </h2>
           </Reveal>
-          <Reveal delay={120}>
-            <div className="stage-stripes relative mt-10 grid gap-4 overflow-hidden rounded-3xl p-6 sm:grid-cols-3">
-              <div className="absolute inset-0 bg-black/25" />
+          <Reveal delay={100}>
+            <div className="relative mt-10 grid gap-3 overflow-hidden rounded-3xl border border-white/[0.06] bg-white/[0.02] p-5 sm:grid-cols-3">
               {MODIFIERS.map((m) => (
                 <div
                   key={m.name}
-                  className={`${m.cls} relative grid h-32 place-items-center rounded-2xl text-center`}
+                  className={`${m.cls} relative grid h-28 place-items-center rounded-2xl text-center`}
                 >
                   <div>
                     <p className="font-mono text-[12px] text-white">{m.name}</p>
-                    <p className="mt-1 font-mono text-[10px] uppercase tracking-widest text-white/60">
+                    <p className="mt-0.5 font-mono text-[10px] uppercase tracking-widest text-white/40">
                       {m.note}
                     </p>
                   </div>
@@ -224,51 +214,45 @@ export default function Home() {
           </Reveal>
         </section>
 
-        {/* ── Playground ───────────────────────────────────────────────── */}
+        {/* ── PLAYGROUND ─────────────────────────────────────────────── */}
         <section id="playground" className="section-cv mt-32">
           <Reveal>
-            <Eyebrow>Live playground</Eyebrow>
-            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">Tune it. Copy it. Ship it.</h2>
-            <p className="mt-4 max-w-xl text-haze/75">
-              Every knob is a CSS custom property the package exposes. Drag the
-              sliders, switch the backdrop, copy the exact code.
+            <Label>Live playground</Label>
+            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
+              Tune it. Copy it. Ship it.
+            </h2>
+            <p className="mt-3 max-w-md text-sm text-white/40">
+              Every knob is a CSS custom property. Drag the sliders, copy the code.
             </p>
           </Reveal>
-          <Reveal delay={120} className="mt-10">
+          <Reveal delay={100} className="mt-10">
             <Playground />
           </Reveal>
         </section>
 
-        {/* ── Effects lab ──────────────────────────────────────────────── */}
+        {/* ── EFFECTS LAB ────────────────────────────────────────────── */}
         <section className="section-cv mt-32">
           <Reveal>
-            <Eyebrow>Effects lab</Eyebrow>
-            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">Modals, toasts, chrome.</h2>
-            <p className="mt-4 max-w-xl text-haze/75">
-              Drop it on overlays and chrome too. Open a glass dialog over a
-              dimmed scrim, or fire a frosted toast.
-            </p>
+            <Label>Effects lab</Label>
+            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
+              Modals, toasts, chrome.
+            </h2>
           </Reveal>
-          <Reveal delay={120}>
-            <div className="stage-stripes relative mt-10 overflow-hidden rounded-3xl px-6 py-12">
-              <div className="absolute inset-0 bg-black/20" />
-              <div className="relative">
-                <EffectsLab />
-              </div>
+          <Reveal delay={100}>
+            <div className="relative mt-10 overflow-hidden rounded-3xl border border-white/[0.06] bg-white/[0.02] px-6 py-12">
+              <EffectsLab />
             </div>
           </Reveal>
           {/* chip marquee */}
-          <Reveal delay={60} className="mt-5">
-            <div className="relative overflow-hidden rounded-3xl py-6">
-              <div className="stage-stripes absolute inset-0 opacity-70" />
-              <div className="absolute inset-0 bg-black/25" />
+          <Reveal delay={60} className="mt-4">
+            <div className="relative overflow-hidden rounded-3xl border border-white/[0.06] py-5">
               <div className="relative flex w-max marquee-track gap-3">
                 {[...Array(2)].flatMap((_, k) =>
-                  ["refraction", "dispersion", "depth", "bloom", "frost", "rim", "themeable", "~1KB", "MIT"].map(
+                  ["refraction", "dispersion", "depth", "bloom", "frost", "rim", "tilt", "~1KB", "MIT"].map(
                     (t) => (
                       <span
                         key={`${k}-${t}`}
-                        className="glass glass-strong glass-pill whitespace-nowrap px-5 py-2 text-sm text-white"
+                        className="glass glass-strong glass-pill whitespace-nowrap px-5 py-2 text-sm text-white/70"
                       >
                         {t}
                       </span>
@@ -280,43 +264,45 @@ export default function Home() {
           </Reveal>
         </section>
 
-        {/* ── Install / code ───────────────────────────────────────────── */}
+        {/* ── INSTALL ────────────────────────────────────────────────── */}
         <section id="install" className="section-cv mt-32">
           <Reveal>
-            <Eyebrow>Install</Eyebrow>
-            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">Two lines, any stack.</h2>
+            <Label>Install</Label>
+            <h2 className="max-w-lg text-4xl font-semibold tracking-tight text-white">
+              Two lines, any stack.
+            </h2>
           </Reveal>
-          <div className="mt-10 grid gap-5 lg:grid-cols-2">
+          <div className="mt-10 grid gap-4 lg:grid-cols-2">
             <Reveal>
               <CodeBlock
                 label="npm"
                 code={`import "glassfx";           // injects the lens + bloom\nimport "glassfx/glass.css";  // the styles\n\n<div class="glass glass-refract">…</div>`}
               />
             </Reveal>
-            <Reveal delay={90}>
+            <Reveal delay={80}>
               <CodeBlock
                 label="cdn — no build"
                 code={`<link rel="stylesheet"\n  href="https://unpkg.com/glassfx/src/glass.css" />\n<script type="module">\n  import "https://unpkg.com/glassfx";\n</script>`}
               />
             </Reveal>
-            <Reveal delay={60}>
+            <Reveal delay={40}>
               <CodeBlock
                 label="react"
-                code={`import { GlassFilter, Glass } from "glassfx/react";\nimport "glassfx/glass.css";\n\n<GlassFilter />\n<Glass strong refract className="rounded-2xl p-6">\n  Frosted, lensed, blooming.\n</Glass>`}
+                code={`import { GlassFilter, Glass } from "glassfx/react";\nimport "glassfx/glass.css";\n\n<GlassFilter />\n<Glass strong refract tilt className="rounded-2xl p-6">\n  Frosted, lensed, tilting.\n</Glass>`}
               />
             </Reveal>
-            <Reveal delay={150}>
+            <Reveal delay={120}>
               <div className="glass glass-strong rounded-2xl p-6">
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-haze-dim">
+                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/30">
                   classes
                 </p>
-                <ul className="mt-3 divide-y divide-white/8">
+                <ul className="mt-3 divide-y divide-white/[0.06]">
                   {CLASS_TABLE.map(([c, d]) => (
                     <li key={c} className="flex flex-col gap-0.5 py-2 sm:flex-row sm:gap-4">
                       <code className="min-w-[150px] font-mono text-[12.5px] text-white">
                         {c}
                       </code>
-                      <span className="text-sm text-haze/75">{d}</span>
+                      <span className="text-sm text-white/40">{d}</span>
                     </li>
                   ))}
                 </ul>
@@ -324,29 +310,29 @@ export default function Home() {
             </Reveal>
           </div>
 
-          {/* browser support + fallback toggle */}
-          <Reveal delay={80} className="mt-12">
-            <Eyebrow>Browser support — honest about it</Eyebrow>
-            <p className="mb-6 max-w-2xl text-haze/75">
+          {/* browser support */}
+          <Reveal delay={60} className="mt-12">
+            <Label>Browser support — honest about it</Label>
+            <p className="mb-6 max-w-2xl text-sm text-white/40">
               Depth, frost, rim and bloom work everywhere with{" "}
-              <code className="font-mono text-[13px]">backdrop-filter</code>. Real
+              <code className="font-mono text-[13px] text-white/60">backdrop-filter</code>. Real
               refraction is Chromium-only today; Safari and Firefox fall back to a
-              clean frost — never a broken box. See for yourself:
+              clean frost — never a broken box.
             </p>
             <FallbackToggle />
           </Reveal>
         </section>
 
-        {/* ── Footer ───────────────────────────────────────────────────── */}
-        <footer className="mt-32 border-t border-white/10 pt-10">
+        {/* ── Footer ─────────────────────────────────────────────────── */}
+        <footer className="mt-40 border-t border-white/[0.06] pt-10 pb-8">
           <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
             <div>
-              <p className="font-display text-2xl">GlassFX</p>
-              <p className="mt-1 text-sm text-haze/60">
+              <p className="text-lg font-semibold text-white">GlassFX</p>
+              <p className="mt-1 text-sm text-white/30">
                 Real glass for the web. MIT licensed.
               </p>
             </div>
-            <div className="flex items-center gap-5 font-mono text-[12px] text-haze/70">
+            <div className="flex items-center gap-5 font-mono text-[12px] text-white/30">
               <a
                 href="https://github.com/SquareMediaGroup/glassfx"
                 className="transition hover:text-white"
