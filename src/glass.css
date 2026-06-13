@@ -15,8 +15,8 @@
    MIT licensed. https://github.com/SquareMediaGroup/glassfx
    ========================================================================== */
 
-.glass {
-  /* —— Theming knobs (override freely) —————————————————————————————————— */
+:root {
+  /* —— Global Defaults (override on :root to theme site-wide) ————————————— */
   --glass-tint: 255, 255, 255;        /* surface colour, as "r, g, b"        */
   --glass-alpha: 0.16;                /* surface opacity                     */
   --glass-blur: 14px;                 /* frost amount                        */
@@ -31,6 +31,13 @@
   --glass-refract-dispersion: 6;      /* chromatic aberration spread         */
   --glass-refract-blur: 5px;          /* post-displacement blur              */
 
+  /* strong modifier defaults */
+  --glass-strong-tint: 30, 38, 48;
+  --glass-strong-alpha: 0.66;
+  --glass-strong-blur: 16px;
+}
+
+.glass {
   position: relative;
   isolation: isolate;                 /* own stacking context for ::after    */
   border-radius: var(--glass-radius);
@@ -136,11 +143,11 @@
 .glass-xl { --glass-blur: 20px; }
 
 /* Frosted dark slab — strong, legible surfaces (headers, toolbars). Neutral
-   slate by default; override --glass-tint to brand it. */
+   slate by default; override --glass-strong-tint to brand it globally. */
 .glass-strong {
-  --glass-tint: 30, 38, 48;
-  --glass-alpha: 0.66;
-  --glass-blur: 16px;
+  --glass-tint: var(--glass-strong-tint);
+  --glass-alpha: var(--glass-strong-alpha);
+  --glass-blur: var(--glass-strong-blur);
 }
 
 .glass-pill { border-radius: 9999px; }
@@ -155,6 +162,13 @@
 /* Optional helper: a barely-there text shadow to lift labels off translucent
    glass for legibility. */
 .glass-legible-text { text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45); }
+
+/* Legibility shadow helper optimized for navigation dropdown items. */
+@media (min-width: 768px) {
+  .glass-menu-legible {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  }
+}
 
 /* —— Real refraction (Chromium) ———————————————————————————————————————————
    Only Chromium currently honours an SVG filter reference in backdrop-filter;

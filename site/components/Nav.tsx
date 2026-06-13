@@ -27,7 +27,7 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="rounded-full px-3.5 py-1.5 text-sm text-white/60 transition-colors hover:text-white"
+              className="glass-menu-legible rounded-full px-3.5 py-1.5 text-sm text-white/60 transition-colors hover:text-white"
             >
               {l.label}
             </a>

@@ -3,6 +3,20 @@
 /* glassfx — the package's own styles. */
 @import "glassfx/glass.css";
 
+:root {
+  /* Override site-wide defaults with Destiny Church beta settings */
+  --glass-strong-tint: 54, 63, 72; /* Destiny slate grey */
+  --glass-strong-alpha: 0.66;
+  --glass-strong-blur: 16px;
+}
+
+/* Legibility shadow helper optimized for navigation dropdown items */
+@media (min-width: 768px) {
+  .glass-menu-legible {
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  }
+}
+
 /* ── Design tokens ─────────────────────────────────────────────────────── */
 @theme inline {
   --color-ink: #000000;
