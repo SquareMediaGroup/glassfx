@@ -3,8 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 /**
- * The signature interactive: a draggable glass lens floating over a
- * high-contrast stripe field. Drag it around to watch it bend and split light.
+ * The signature interactive: a draggable glass lens floating over the hero text.
  */
 export default function HeroLens() {
   const stageRef = useRef<HTMLDivElement>(null);
@@ -20,7 +19,8 @@ export default function HeroLens() {
     if (!stage || !lens) return;
     const sr = stage.getBoundingClientRect();
     const lr = lens.getBoundingClientRect();
-    setPos({ x: (sr.width - lr.width) / 2, y: (sr.height - lr.height) / 2 });
+    // Offset it slightly upwards so it rests beautifully on the typography
+    setPos({ x: (sr.width - lr.width) / 2, y: (sr.height - lr.height) / 2 - 40 });
   }, []);
 
   const clamp = useCallback((x: number, y: number) => {
@@ -63,36 +63,22 @@ export default function HeroLens() {
   return (
     <div
       ref={stageRef}
-      className="relative h-[340px] w-full overflow-hidden rounded-3xl border border-white/[0.06] sm:h-[440px]"
+      className="pointer-events-none absolute inset-0 z-20 overflow-hidden"
     >
-      {/* Vivid photograph for the lens to refract */}
-      <img
-        src="https://images.unsplash.com/photo-1550684376-efcbd6e3f031?w=1400&q=80&auto=format&fit=crop"
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-
-      {/* Large faint label */}
-      <div className="pointer-events-none absolute inset-0 grid place-items-center">
-        <p className="text-[15vw] font-semibold leading-none text-white/[0.04] sm:text-[140px]">
-          drag me
-        </p>
-      </div>
-
-      {/* The lens itself — real package classes. */}
+      {/* The lens itself — pointer-events-auto so it can be grabbed. */}
       <div
         ref={lensRef}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
-        className={`glass glass-refract absolute grid h-36 w-56 cursor-grab touch-none select-none place-items-center rounded-[26px] active:cursor-grabbing ${
+        className={`glass glass-refract pointer-events-auto absolute grid h-48 w-72 cursor-grab touch-none select-none place-items-center rounded-[32px] active:cursor-grabbing ${
           dragging ? "" : "animate-float"
         }`}
         style={
           pos
             ? { left: pos.x, top: pos.y }
-            : { left: "50%", top: "50%", transform: "translate(-50%,-50%)" }
+            : { left: "50%", top: "45%", transform: "translate(-50%,-50%)" }
         }
       >
         <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-white/50">

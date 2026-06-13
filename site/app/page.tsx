@@ -55,35 +55,32 @@ export default function Home() {
 
       <main id="top" className="relative mx-auto max-w-7xl px-5 pb-40 pt-24 sm:px-8">
 
-        {/* ── HERO: Demo first ─────────────────────────────────────────── */}
-        <section className="relative pt-16">
+        {/* ── HERO: Typography first, floating lens ─────────────────────────── */}
+        <section className="relative flex min-h-[70vh] flex-col items-center justify-center py-20">
           {/* Faint radial gradient background anchor */}
           <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[800px] w-[140vw] -translate-x-1/2 -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(59,130,246,0.12)_0%,rgba(139,92,246,0.08)_30%,transparent_70%)] opacity-70" />
 
-          <Reveal>
-            <div className="mx-auto max-w-5xl">
-              <HeroLens />
-            </div>
-          </Reveal>
+          {/* The floating draggable lens stage */}
+          <HeroLens />
 
-          <Reveal delay={100}>
-            <div className="mx-auto mt-14 max-w-2xl text-center">
-              <h1 className="text-5xl font-semibold tracking-tight text-white sm:text-7xl">
-                GlassFX
+          <Reveal>
+            <div className="mx-auto max-w-4xl text-center">
+              <h1 className="text-6xl font-extrabold leading-none tracking-tight text-white sm:text-8xl lg:text-[120px]">
+                Glass<span className="text-white/40">FX</span>
               </h1>
-              <p className="mt-4 text-lg text-white/50">
+              <p className="mx-auto mt-8 max-w-2xl text-xl text-white/50 sm:text-2xl">
                 Real refraction, chromatic dispersion, depth &amp; bloom.<br />
                 One class. ~1 KB. Zero dependencies.
               </p>
-              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                <div className="glass glass-strong glass-pill flex items-center gap-3 px-6 py-3 font-mono text-[14px] text-white/80">
+              <div className="relative z-30 mt-12 flex flex-wrap items-center justify-center gap-4">
+                <div className="glass glass-strong glass-pill flex items-center gap-3 px-8 py-4 font-mono text-[15px] text-white/80">
                   <span className="text-white/30">$</span> npm i glassfx
                 </div>
                 <a
                   href="https://github.com/SquareMediaGroup/glassfx"
                   target="_blank"
                   rel="noreferrer"
-                  className="glass glass-pill px-6 py-3 text-[14px] font-medium text-white/80 transition hover:text-white"
+                  className="glass glass-pill px-8 py-4 text-[15px] font-medium text-white/80 transition hover:text-white"
                 >
                   View on GitHub →
                 </a>
