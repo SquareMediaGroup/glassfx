@@ -14,17 +14,20 @@ npm run dev
 
 ## Deploy to Vercel
 
-This app lives in a subdirectory and depends on the package one level up
-(`"glassfx": "file:.."`), so when importing the repo into Vercel:
+The repo is an **npm workspace** (root `package.json` declares
+`"workspaces": ["site"]`), and this app depends on the package one level up
+(`"glassfx": "file:.."`). Because of the workspace, Vercel detects a monorepo
+and automatically includes the parent package in the build.
 
-1. **Set the project's Root Directory to `site`.**
-2. Leave "Include files outside the Root Directory" **enabled** (the default) —
-   Vercel needs the parent `../src` to resolve the `file:..` dependency.
-   `next.config.ts` sets `outputFileTracingRoot` to the repo root so the package
-   source is bundled.
+When importing the repo into Vercel:
 
-Framework preset is auto-detected as Next.js (also pinned in `vercel.json`).
-No env vars required. Pushing to `main` triggers a deploy.
+1. **Set the project's Root Directory to `site`.** Vercel detects the workspace
+   root above it and installs/links the `glassfx` package from there.
+2. That's it — framework is auto-detected as Next.js (also pinned in
+   `vercel.json`), no env vars, and `next.config.ts` sets
+   `outputFileTracingRoot` to the repo root so the package source is bundled.
+
+Pushing to `main` triggers a deploy.
 
 CLI alternative:
 

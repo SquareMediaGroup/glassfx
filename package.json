@@ -17,13 +17,17 @@
     "./src/index.js",
     "*.css"
   ],
+  "workspaces": [
+    "site"
+  ],
   "files": [
     "src",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
-    "demo": "python3 -m http.server 8080"
+    "demo": "python3 -m http.server 8080",
+    "build": "npm run build --workspace site"
   },
   "keywords": [
     "glassmorphism",
