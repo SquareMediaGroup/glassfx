@@ -1,19 +1,10 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Hanken_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { Inter, IBM_Plex_Mono } from "next/font/google";
 import { GlassFilter } from "glassfx/react";
 import "./globals.css";
 
-const instrument = Instrument_Serif({
-  variable: "--font-instrument",
-  weight: "400",
-  style: ["normal", "italic"],
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const hanken = Hanken_Grotesk({
-  variable: "--font-hanken",
-  weight: ["300", "400", "500", "600", "700"],
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -43,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${instrument.variable} ${hanken.variable} ${plexMono.variable}`}
+        className={`${inter.variable} ${plexMono.variable}`}
       >
         {/* Injects the shared #glassfx-refract filter + starts the cursor bloom. */}
         <GlassFilter />

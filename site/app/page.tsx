@@ -63,21 +63,23 @@ export default function Home() {
 
       <main id="top" className="relative mx-auto max-w-6xl px-5 pb-40 pt-48 sm:px-8">
         {/* ── Hero ─────────────────────────────────────────────────────── */}
-        <section className="pt-10">
+        <section className="pt-20 text-center">
           <Reveal>
             <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-haze-dim">
               MIT · ~1KB · drop-in · zero deps
             </p>
           </Reveal>
           <Reveal delay={80}>
-            <h1 className="mt-5 max-w-4xl text-[16vw] leading-[0.9] tracking-tighter sm:text-[110px]">
-              Real glass.
+            <h1 className="mx-auto mt-6 max-w-5xl text-[14vw] font-semibold leading-[1.05] tracking-tighter text-white sm:text-[110px]">
+              Pro glass.
               <br />
-              <span className="italic text-[#ff3b30]">One class.</span>
+              <span className="bg-gradient-to-r from-gray-400 to-gray-600 bg-clip-text text-transparent">
+                Zero bloat.
+              </span>
             </h1>
           </Reveal>
           <Reveal delay={160}>
-            <p className="mt-6 max-w-xl text-lg text-haze/80">
+            <p className="mx-auto mt-8 max-w-xl text-lg text-haze/80">
               GlassFX bends light for real — refraction, chromatic dispersion,
               depth and a cursor-tracking bloom. Add{" "}
               <code className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[13px]">
@@ -87,64 +89,56 @@ export default function Home() {
             </p>
           </Reveal>
           <Reveal delay={240}>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
               <a
-                href="#playground"
-                className="glass glass-strong glass-pill px-7 py-3.5 text-sm font-semibold text-white transition hover:brightness-125"
+                href="#showcase"
+                className="glass glass-strong glass-pill px-8 py-4 text-[15px] font-medium text-white transition hover:brightness-125"
               >
-                Try the playground
+                See the features
               </a>
-              <a
-                href="#install"
-                className="glass glass-pill px-7 py-3.5 text-sm font-medium text-white transition hover:brightness-125"
-              >
-                Install
-              </a>
-              <div className="glass glass-strong glass-pill flex items-center gap-3 px-5 py-3 font-mono text-[13px] text-haze">
+              <div className="glass glass-pill flex items-center gap-3 px-6 py-4 font-mono text-[14px] text-haze">
                 <span className="text-haze-dim">$</span> npm i glassfx
               </div>
             </div>
           </Reveal>
 
-          <HeroLens />
+          <div className="mx-auto mt-20 max-w-5xl">
+            <HeroLens />
+          </div>
         </section>
 
         {/* ── Pillars ──────────────────────────────────────────────────── */}
-        <section id="showcase" className="section-cv mt-32">
+        <section id="showcase" className="section-cv mt-40">
           <Reveal>
             <Eyebrow>What you get</Eyebrow>
-            <h2 className="max-w-2xl text-4xl sm:text-5xl">
+            <h2 className="max-w-2xl text-5xl font-medium tracking-tight text-white sm:text-6xl">
               Three things, none of them faked.
             </h2>
           </Reveal>
-          <div className="mt-16 grid gap-5 md:grid-cols-3">
-            <Reveal delay={0}>
-              <Glass tilt refract className="relative h-full overflow-hidden rounded-3xl p-7">
+          <div className="mt-16 grid gap-6 md:grid-cols-12 md:grid-rows-2">
+            <Reveal delay={0} className="md:col-span-8 md:row-span-2">
+              <Glass tilt refract className="relative flex h-[600px] flex-col justify-end overflow-hidden rounded-[40px] p-12">
                 <div className="stage-stripes absolute inset-0 -z-[1] opacity-70" />
-                <h3 className="text-2xl text-white">Refraction</h3>
-                <p className="mt-2 text-sm text-haze/85">
+                <h3 className="text-4xl font-semibold tracking-tight text-white">Refraction</h3>
+                <p className="mt-3 max-w-md text-lg text-haze/85">
                   An SVG displacement lens warps the actual backdrop, with R/G/B
-                  pushed apart for true chromatic dispersion. The stripes behind
-                  this card bend — they aren&rsquo;t painted on.
+                  pushed apart for true chromatic dispersion.
                 </p>
               </Glass>
             </Reveal>
-            <Reveal delay={90} className="md:mt-12">
-              <Glass tilt strong className="h-full rounded-3xl p-7">
-                <h3 className="text-2xl text-white">Depth</h3>
-                <p className="mt-2 text-sm text-haze/85">
-                  A specular top edge, a lit gradient rim and a layered elevation
-                  shadow give the surface real thickness — not a flat blur.
+            <Reveal delay={90} className="md:col-span-4 md:row-span-1">
+              <Glass tilt strong className="flex h-[288px] flex-col justify-end rounded-[40px] p-10">
+                <h3 className="text-3xl font-semibold tracking-tight text-white">Depth</h3>
+                <p className="mt-2 text-base text-haze/85">
+                  A specular top edge and rim give the surface real thickness.
                 </p>
               </Glass>
             </Reveal>
-            <Reveal delay={180} className="md:mt-24">
-              <Glass tilt strong className="h-full rounded-3xl p-7">
-                <h3 className="text-2xl text-white">Bloom</h3>
-                <p className="mt-2 text-sm text-haze/85">
-                  A soft specular hotspot follows your cursor across the surface,
-                  with a keyboard-focus equivalent. Hover this card and move
-                  around.
+            <Reveal delay={180} className="md:col-span-4 md:row-span-1">
+              <Glass tilt strong className="flex h-[288px] flex-col justify-end rounded-[40px] p-10">
+                <h3 className="text-3xl font-semibold tracking-tight text-white">Bloom</h3>
+                <p className="mt-2 text-base text-haze/85">
+                  A soft hotspot follows your cursor across the surface.
                 </p>
               </Glass>
             </Reveal>
@@ -155,7 +149,7 @@ export default function Home() {
         <section id="shapes" className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Any shape</Eyebrow>
-            <h2 className="max-w-2xl text-4xl sm:text-5xl">
+            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">
               It follows the silhouette.
             </h2>
             <p className="mt-4 max-w-xl text-haze/75">
@@ -188,7 +182,7 @@ export default function Home() {
         <section className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Real UI</Eyebrow>
-            <h2 className="max-w-2xl text-4xl sm:text-5xl">Buttons, toggles, fields.</h2>
+            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">Buttons, toggles, fields.</h2>
             <p className="mt-4 max-w-xl text-haze/75">
               Not just decoration — usable controls with the bloom on hover and
               focus. Every element below is plain markup plus a glass class.
@@ -208,7 +202,7 @@ export default function Home() {
         <section className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Modifiers</Eyebrow>
-            <h2 className="max-w-2xl text-4xl sm:text-5xl">One base, many moods.</h2>
+            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">One base, many moods.</h2>
           </Reveal>
           <Reveal delay={120}>
             <div className="stage-stripes relative mt-10 grid gap-4 overflow-hidden rounded-3xl p-6 sm:grid-cols-3">
@@ -234,7 +228,7 @@ export default function Home() {
         <section id="playground" className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Live playground</Eyebrow>
-            <h2 className="max-w-2xl text-4xl sm:text-5xl">Tune it. Copy it. Ship it.</h2>
+            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">Tune it. Copy it. Ship it.</h2>
             <p className="mt-4 max-w-xl text-haze/75">
               Every knob is a CSS custom property the package exposes. Drag the
               sliders, switch the backdrop, copy the exact code.
@@ -249,7 +243,7 @@ export default function Home() {
         <section className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Effects lab</Eyebrow>
-            <h2 className="max-w-2xl text-4xl sm:text-5xl">Modals, toasts, chrome.</h2>
+            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">Modals, toasts, chrome.</h2>
             <p className="mt-4 max-w-xl text-haze/75">
               Drop it on overlays and chrome too. Open a glass dialog over a
               dimmed scrim, or fire a frosted toast.
@@ -290,7 +284,7 @@ export default function Home() {
         <section id="install" className="section-cv mt-32">
           <Reveal>
             <Eyebrow>Install</Eyebrow>
-            <h2 className="max-w-2xl text-4xl sm:text-5xl">Two lines, any stack.</h2>
+            <h2 className="max-w-2xl text-4xl font-medium tracking-tight text-white sm:text-5xl">Two lines, any stack.</h2>
           </Reveal>
           <div className="mt-10 grid gap-5 lg:grid-cols-2">
             <Reveal>
