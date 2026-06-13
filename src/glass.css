@@ -12,7 +12,7 @@
    currently Chromium-only; the @supports gate below keeps every other engine
    on the depth + frost fallback so a glass surface is never broken/empty.
 
-   MIT licensed. https://github.com/  (set on publish)
+   MIT licensed. https://github.com/SquareMediaGroup/glassfx
    ========================================================================== */
 
 .glass {

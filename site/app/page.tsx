@@ -350,10 +350,16 @@ export default function Home() {
               </p>
             </div>
             <div className="flex items-center gap-5 font-mono text-[12px] text-haze/70">
-              <a href="https://github.com/" className="transition hover:text-white">
+              <a
+                href="https://github.com/SquareMediaGroup/glassfx"
+                className="transition hover:text-white"
+              >
                 GitHub
               </a>
-              <a href="https://npmjs.com/" className="transition hover:text-white">
+              <a
+                href="https://www.npmjs.com/package/glassfx"
+                className="transition hover:text-white"
+              >
                 npm
               </a>
               <a href="#top" className="transition hover:text-white">

@@ -50,10 +50,10 @@
   "author": "Square Media Group",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/SquareMediaGroup/glassfx.git"
   },
-  "homepage": "",
+  "homepage": "https://github.com/SquareMediaGroup/glassfx#readme",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/SquareMediaGroup/glassfx/issues"
   }
 }

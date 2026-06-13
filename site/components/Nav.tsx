@@ -38,7 +38,7 @@ export default function Nav() {
           ))}
         </div>
         <a
-          href="https://github.com/"
+          href="https://github.com/SquareMediaGroup/glassfx"
           target="_blank"
           rel="noreferrer"
           className="glass glass-pill ml-1 rounded-full px-4 py-1.5 text-sm font-medium text-white transition hover:brightness-125"
