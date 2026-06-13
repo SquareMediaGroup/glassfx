@@ -10,7 +10,7 @@ const LINKS = [
 export default function Nav() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
-      <nav className="glass glass-strong glass-refract glass-pill pointer-events-auto flex items-center gap-1 py-1.5 pl-3 pr-1.5">
+      <nav className="glass glass-sm glass-refract glass-pill pointer-events-auto flex items-center gap-1 py-1.5 pl-3 pr-1.5">
         <a
           href="#top"
           className="flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold tracking-tight text-white"

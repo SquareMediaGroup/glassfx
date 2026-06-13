@@ -52,11 +52,11 @@ const FILTER_MARKUP = `
     <feFuncR type="linear" slope="1.05" intercept="-0.025"/>
     <feFuncG type="linear" slope="1.05" intercept="-0.025"/>
   </feComponentTransfer>
-  <feDisplacementMap in="SourceGraphic" in2="map" scale="42" xChannelSelector="R" yChannelSelector="G" result="dispR"/>
+  <feDisplacementMap in="SourceGraphic" in2="map" scale="64" xChannelSelector="R" yChannelSelector="G" result="dispR"/>
   <feColorMatrix in="dispR" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="onlyR"/>
-  <feDisplacementMap in="SourceGraphic" in2="map" scale="48" xChannelSelector="R" yChannelSelector="G" result="dispG"/>
+  <feDisplacementMap in="SourceGraphic" in2="map" scale="72" xChannelSelector="R" yChannelSelector="G" result="dispG"/>
   <feColorMatrix in="dispG" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="onlyG"/>
-  <feDisplacementMap in="SourceGraphic" in2="map" scale="54" xChannelSelector="R" yChannelSelector="G" result="dispB"/>
+  <feDisplacementMap in="SourceGraphic" in2="map" scale="80" xChannelSelector="R" yChannelSelector="G" result="dispB"/>
   <feColorMatrix in="dispB" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="onlyB"/>
   <feBlend in="onlyR" in2="onlyG" mode="screen" result="rg"/>
   <feBlend in="rg" in2="onlyB" mode="screen"/>
@@ -263,7 +263,7 @@ export function updateElementRefraction(el) {
   const hasCustomVars = styleAttr.includes("--glass-refract-strength") || styleAttr.includes("--glass-refract-dispersion");
 
   // Fast path: skip expensive style recalculations if no variables are defined and default is active.
-  if (!hasCustomVars && el.__lastStrength === 48 && el.__lastDispersion === 6) {
+  if (!hasCustomVars && el.__lastStrength === 72 && el.__lastDispersion === 8) {
     return;
   }
 
@@ -271,8 +271,8 @@ export function updateElementRefraction(el) {
   const strengthStr = style.getPropertyValue("--glass-refract-strength").trim();
   const dispersionStr = style.getPropertyValue("--glass-refract-dispersion").trim();
 
-  const strength = strengthStr ? parseFloat(strengthStr) : 48;
-  const dispersion = dispersionStr ? parseFloat(dispersionStr) : 6;
+  const strength = strengthStr ? parseFloat(strengthStr) : 72;
+  const dispersion = dispersionStr ? parseFloat(dispersionStr) : 8;
 
   // Optimise layout/rendering: avoid redundant DOM/style changes if values haven't changed.
   if (el.__lastStrength === strength && el.__lastDispersion === dispersion) {
@@ -282,7 +282,7 @@ export function updateElementRefraction(el) {
   el.__lastStrength = strength;
   el.__lastDispersion = dispersion;
 
-  if (strength === 48 && dispersion === 6) {
+  if (strength === 72 && dispersion === 8) {
     el.style.removeProperty("--glass-refract-id");
     return;
   }

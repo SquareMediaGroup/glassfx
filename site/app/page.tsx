@@ -32,11 +32,8 @@ const SHAPES: { label: string; cls: string; style?: React.CSSProperties }[] = [
 const CLASS_TABLE: [string, string][] = [
   ["glass", "Base material: depth, frost, rim, bloom."],
   ["glass-refract", "Real backdrop lensing + chromatic dispersion (Chromium)."],
-  ["glass-strong", "Frosted dark slab — strong, legible."],
-  ["glass-sm / -md / -xl", "Frost-amount presets."],
+  ["glass-sm", "Less frost for higher legibility."],
   ["glass-pill", "border-radius: 9999px."],
-  ["glass-opaque", "Near-opaque — dropdowns over busy content."],
-  ["glass-translucent", "Lighter, more see-through fill."],
 ];
 
 function Label({ children }: { children: React.ReactNode }) {
@@ -73,7 +70,7 @@ export default function Home() {
                 One class. ~1 KB. Zero dependencies.
               </p>
               <div className="relative z-30 mt-12 flex flex-wrap items-center justify-center gap-4">
-                <div className="glass glass-strong glass-pill flex items-center gap-3 px-8 py-4 font-mono text-[15px] text-white/80">
+                <div className="glass glass-sm glass-refract glass-pill flex items-center gap-3 px-8 py-4 font-mono text-[15px] text-white/80">
                   <span className="text-white/30">$</span> npm i glassfx
                 </div>
                 <a
@@ -117,7 +114,7 @@ export default function Home() {
             {/* Stacked right column */}
             <div className="flex flex-col gap-4 md:col-span-4">
               <Reveal delay={80}>
-                <Glass tilt strong className="relative flex h-[230px] flex-col justify-end overflow-hidden rounded-3xl p-8">
+                <Glass tilt sm refract className="relative flex h-[230px] flex-col justify-end overflow-hidden rounded-3xl p-8">
                   <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
                   <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">Depth</p>
                   <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">
@@ -126,7 +123,7 @@ export default function Home() {
                 </Glass>
               </Reveal>
               <Reveal delay={160}>
-                <Glass tilt strong className="relative flex h-[230px] flex-col justify-end overflow-hidden rounded-3xl p-8">
+                <Glass tilt sm refract className="relative flex h-[230px] flex-col justify-end overflow-hidden rounded-3xl p-8">
                   <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
                   <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">Bloom</p>
                   <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">
@@ -245,7 +242,7 @@ export default function Home() {
                     (t) => (
                       <span
                         key={`${k}-${t}`}
-                        className="glass glass-strong glass-pill whitespace-nowrap px-5 py-2 text-sm text-white/70"
+                        className="glass glass-sm glass-refract glass-pill whitespace-nowrap px-5 py-2 text-sm text-white/70"
                       >
                         {t}
                       </span>
@@ -281,11 +278,11 @@ export default function Home() {
             <Reveal delay={40}>
               <CodeBlock
                 label="react"
-                code={`import { GlassFilter, Glass } from "glassfx/react";\nimport "glassfx/glass.css";\n\n<GlassFilter />\n<Glass strong refract tilt className="rounded-2xl p-6">\n  Frosted, lensed, tilting.\n</Glass>`}
+                code={`import { GlassFilter, Glass } from "glassfx/react";\nimport "glassfx/glass.css";\n\n<GlassFilter />\n<Glass sm refract tilt className="rounded-2xl p-6">\n  Frosted, lensed, tilting.\n</Glass>`}
               />
             </Reveal>
             <Reveal delay={120}>
-              <div className="glass glass-strong rounded-2xl p-6">
+              <div className="glass glass-sm glass-refract rounded-2xl p-6">
                 <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/30">
                   classes
                 </p>

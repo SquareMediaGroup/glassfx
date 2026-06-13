@@ -17,7 +17,7 @@ export default function FallbackToggle() {
           onClick={() => setFallback((v) => !v)}
           role="switch"
           aria-checked={fallback}
-          className="glass glass-strong glass-pill flex items-center gap-3 py-1.5 pl-2 pr-4 text-sm"
+          className="glass glass-sm glass-refract glass-pill flex items-center gap-3 py-1.5 pl-2 pr-4 text-sm"
         >
           <span
             className={`grid h-6 w-11 place-items-start rounded-full p-0.5 transition ${
@@ -42,7 +42,7 @@ export default function FallbackToggle() {
         {["card", "pill", "panel"].map((b) => (
           <div
             key={b}
-            className="glass glass-strong glass-refract relative grid h-36 place-items-center overflow-hidden rounded-2xl"
+            className="glass glass-sm glass-refract relative grid h-36 place-items-center overflow-hidden rounded-2xl"
           >
             <div className="stage-stripes absolute inset-0 -z-[1] opacity-70" />
             <p className="font-mono text-[11px] uppercase tracking-widest text-haze/80">

@@ -6,14 +6,12 @@ import { Glass } from "glassfx/react";
 const MODIFIERS = [
   { cls: "glass", name: "glass", note: "base material" },
   { cls: "glass glass-refract", name: "glass-refract", note: "real lensing" },
-  { cls: "glass glass-strong", name: "glass-strong", note: "frosted slab" },
-  { cls: "glass glass-strong glass-opaque", name: "glass-opaque", note: "near-solid" },
-  { cls: "glass glass-translucent", name: "glass-translucent", note: "see-through" },
   { cls: "glass glass-sm", name: "glass-sm", note: "less frost" },
+  { cls: "glass glass-sm glass-refract", name: "glass-sm refract", note: "light & lensed" },
 ];
 
 export default function ModifiersShowcase() {
-  const [active, setActive] = useState(MODIFIERS[2]); // Default to glass-strong
+  const [active, setActive] = useState(MODIFIERS[1]); // Default to glass-refract
 
   return (
     <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-12">

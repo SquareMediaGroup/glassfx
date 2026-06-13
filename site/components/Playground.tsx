@@ -136,7 +136,7 @@ export default function Playground() {
         </div>
 
         {/* backdrop switch */}
-        <div className="glass glass-strong glass-pill absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1 p-1">
+        <div className="glass glass-sm glass-refract glass-pill absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1 p-1">
           {(["stripes", "spectrum", "photo"] as Backdrop[]).map((b) => (
             <button
               key={b}
@@ -153,7 +153,7 @@ export default function Playground() {
 
       {/* Controls + live code */}
       <div className="flex flex-col gap-5">
-        <div className="glass glass-strong rounded-3xl p-5">
+        <div className="glass glass-sm glass-refract rounded-3xl p-5">
           <div className="grid gap-4">
             <div className="flex items-center gap-4">
               <label className="flex items-center gap-2">

@@ -23,7 +23,7 @@ export default function EffectsLab() {
       <div className="flex flex-wrap gap-3">
         <button
           onClick={() => setModal(true)}
-          className="glass glass-strong glass-pill px-6 py-3 text-sm font-semibold text-white transition hover:brightness-125"
+          className="glass glass-sm glass-refract glass-pill px-6 py-3 text-sm font-semibold text-white transition hover:brightness-125"
         >
           Open glass modal
         </button>
@@ -44,7 +44,7 @@ export default function EffectsLab() {
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
           <div
             onClick={(e) => e.stopPropagation()}
-            className="glass glass-strong glass-refract relative w-full max-w-md rounded-3xl p-7"
+            className="glass glass-sm glass-refract relative w-full max-w-md rounded-3xl p-7"
             style={{ animation: "rise 0.4s cubic-bezier(0.16,1,0.3,1) both" }}
           >
             <h3 className="text-2xl">A glass dialog</h3>
@@ -67,7 +67,7 @@ export default function EffectsLab() {
       {/* Toast */}
       {toast && (
         <div
-          className="glass glass-strong fixed bottom-6 left-1/2 z-[80] flex -translate-x-1/2 items-center gap-3 rounded-2xl px-5 py-3.5"
+          className="glass glass-sm glass-refract fixed bottom-6 left-1/2 z-[80] flex -translate-x-1/2 items-center gap-3 rounded-2xl px-5 py-3.5"
           style={{ animation: "rise 0.35s cubic-bezier(0.16,1,0.3,1) both" }}
         >
           <span
