@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>glassfx — real-refraction glassmorphism</title>
+    <link rel="stylesheet" href="../src/glass.css" />
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; }
+      body {
+        font: 15px/1.5 system-ui, -apple-system, sans-serif;
+        color: #fff;
+        /* a busy, colourful backdrop so refraction + dispersion are obvious */
+        background:
+          radial-gradient(120% 120% at 20% 10%, #1b2a4a, transparent 60%),
+          radial-gradient(120% 120% at 90% 20%, #6d3b1f, transparent 55%),
+          radial-gradient(140% 120% at 50% 100%, #2f5d34, transparent 60%),
+          repeating-linear-gradient(90deg, #0c0f16 0 26px, #161b27 26px 52px);
+        min-height: 100%;
+      }
+      .wrap { max-width: 980px; margin: 0 auto; padding: 56px 24px 120px; }
+      h1 { font-size: 34px; margin: 0 0 6px; }
+      .sub { opacity: 0.75; margin: 0 0 40px; }
+      .grid { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+      .card { padding: 26px; min-height: 150px; }
+      .card h3 { margin: 0 0 8px; font-size: 17px; }
+      .card p { margin: 0; opacity: 0.85; font-size: 13.5px; }
+      .bar {
+        display: flex; align-items: center; gap: 16px;
+        padding: 14px 20px; margin: 40px 0 0;
+      }
+      .bar a { color: #fff; text-decoration: none; opacity: 0.85; font-weight: 600; }
+      .pill { display: inline-flex; gap: 6px; padding: 8px; margin-top: 28px; }
+      .pill button {
+        border: 0; background: transparent; color: #fff; font: inherit; font-weight: 600;
+        padding: 8px 16px; border-radius: 9999px; cursor: pointer;
+      }
+      .pill button.active { background: #fff; color: #111; }
+      input.field {
+        width: 100%; border: 0; background: transparent; color: #fff;
+        font: inherit; padding: 14px 18px; outline: none;
+      }
+      input.field::placeholder { color: rgba(255,255,255,0.5); }
+      code { background: rgba(255,255,255,0.12); padding: 1px 6px; border-radius: 5px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>glassfx</h1>
+      <p class="sub">
+        Add <code>glass</code> to any element. Add <code>glass-refract</code> for
+        real backdrop lensing + chromatic dispersion (Chromium). Hover to bloom.
+      </p>
+
+      <div class="grid">
+        <div class="glass glass-refract card" style="border-radius: 22px">
+          <h3>Refraction</h3>
+          <p>The stripes and colour behind this card bend at the rim and split into
+            R/G/B fringes — real displacement, not a painted gradient.</p>
+        </div>
+        <div class="glass glass-strong glass-refract card" style="border-radius: 22px">
+          <h3>Strong + refract</h3>
+          <p>A frosted dark slab for headers and toolbars. Still lenses the
+            backdrop; legible over anything.</p>
+        </div>
+        <div class="glass card" style="border-radius: 22px">
+          <h3>Depth only</h3>
+          <p>No <code>glass-refract</code> — pure CSS depth + frost + bloom. This is
+            also exactly what Safari/Firefox see as the fallback.</p>
+        </div>
+      </div>
+
+      <!-- a translucent toolbar -->
+      <div class="glass glass-strong glass-refract bar" style="border-radius: 18px">
+        <a href="#">Home</a><a href="#">Work</a><a href="#">About</a><a href="#">Contact</a>
+      </div>
+
+      <!-- a segmented pill -->
+      <div class="glass glass-strong glass-refract pill">
+        <button class="active">Day</button>
+        <button>Week</button>
+        <button>Month</button>
+      </div>
+
+      <!-- a search field (focus it to see the keyboard bloom) -->
+      <div class="glass glass-strong glass-refract" style="border-radius: 9999px; margin-top: 28px; max-width: 460px">
+        <input class="field" placeholder="Focus me for the keyboard bloom…" />
+      </div>
+    </div>
+
+    <!-- One import: injects the SVG lens filter + starts the cursor bloom. -->
+    <script type="module" src="../src/index.js"></script>
+  </body>
+</html>
