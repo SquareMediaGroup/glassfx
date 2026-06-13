@@ -1,0 +1,51 @@
+"use client";
+
+const LINKS = [
+  { label: "Showcase", href: "#showcase" },
+  { label: "Shapes", href: "#shapes" },
+  { label: "Playground", href: "#playground" },
+  { label: "Install", href: "#install" },
+];
+
+export default function Nav() {
+  return (
+    <header className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center px-4">
+      <nav className="glass glass-strong glass-refract glass-pill pointer-events-auto flex items-center gap-1 py-1.5 pl-2 pr-1.5">
+        <a
+          href="#top"
+          className="flex items-center gap-2 rounded-full px-3 py-1.5 text-sm font-semibold tracking-tight"
+        >
+          <span
+            className="inline-block h-3.5 w-3.5 rounded-[5px]"
+            style={{
+              background:
+                "conic-gradient(from 210deg, #ff5d3b, #ffb23b, #34e0a1, #2fa9ff, #8b5cf6, #ff5d3b)",
+              boxShadow: "0 0 12px rgba(255,255,255,0.4)",
+            }}
+          />
+          GlassFX
+        </a>
+        <span className="mx-1 hidden h-4 w-px bg-white/15 sm:block" />
+        <div className="hidden items-center sm:flex">
+          {LINKS.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              className="rounded-full px-3.5 py-1.5 text-sm text-haze/80 transition-colors hover:text-white"
+            >
+              {l.label}
+            </a>
+          ))}
+        </div>
+        <a
+          href="https://github.com/"
+          target="_blank"
+          rel="noreferrer"
+          className="glass glass-pill ml-1 rounded-full px-4 py-1.5 text-sm font-medium text-white transition hover:brightness-125"
+        >
+          GitHub
+        </a>
+      </nav>
+    </header>
+  );
+}

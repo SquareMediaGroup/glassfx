@@ -1,0 +1,270 @@
+@import "tailwindcss";
+
+/* glassfx — the package's own styles. Every glass surface on this site uses
+   these classes; the site is its own integration test. */
+@import "glassfx/glass.css";
+
+/* ── Design tokens ─────────────────────────────────────────────────────── */
+@theme inline {
+  --color-ink: #06070a;
+  --color-ink-soft: #0b0e15;
+  --color-haze: #e8ecf6;
+  --color-haze-dim: #9aa3b8;
+  --font-display: var(--font-instrument), Georgia, serif;
+  --font-body: var(--font-hanken), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+:root {
+  --spectrum-1: #ff5d3b; /* warm */
+  --spectrum-2: #ffb23b;
+  --spectrum-3: #34e0a1; /* green */
+  --spectrum-4: #2fa9ff; /* blue */
+  --spectrum-5: #8b5cf6; /* violet */
+  --spectrum-6: #ff4d8d; /* magenta */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-ink);
+}
+
+body {
+  margin: 0;
+  /* transparent so the fixed -z-10 Backdrop (spectral stage) shows through;
+     html carries the base ink colour. */
+  background: transparent;
+  color: var(--color-haze);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--spectrum-4);
+  color: #fff;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.02;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* ── Atmosphere: the living spectral stage ─────────────────────────────────
+   Layered conic/radial meshes drift slowly; a fine grid and grain sit on top.
+   This is the bright, high-frequency content the glass refracts. */
+@keyframes spectral-drift {
+  0% {
+    transform: translate3d(-4%, -2%, 0) rotate(0deg) scale(1.25);
+  }
+  50% {
+    transform: translate3d(4%, 3%, 0) rotate(8deg) scale(1.4);
+  }
+  100% {
+    transform: translate3d(-4%, -2%, 0) rotate(0deg) scale(1.25);
+  }
+}
+
+@keyframes spectral-hue {
+  0% {
+    filter: hue-rotate(0deg) saturate(1.15);
+  }
+  100% {
+    filter: hue-rotate(360deg) saturate(1.15);
+  }
+}
+
+@keyframes beam-sweep {
+  0% {
+    transform: translateX(-60%) skewX(-18deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.5;
+  }
+  40% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(160%) skewX(-18deg);
+    opacity: 0;
+  }
+}
+
+@keyframes float-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* The mesh — two stacked, counter-drifting spectral blobs. Larger, brighter
+   pools so the stage reads as living colour, not flat black. */
+.stage-mesh {
+  position: absolute;
+  inset: -30%;
+  background:
+    radial-gradient(48% 56% at 20% 26%, var(--spectrum-1), transparent 72%),
+    radial-gradient(46% 54% at 80% 20%, var(--spectrum-2), transparent 70%),
+    radial-gradient(56% 62% at 72% 76%, var(--spectrum-4), transparent 72%),
+    radial-gradient(52% 58% at 22% 78%, var(--spectrum-5), transparent 72%),
+    radial-gradient(44% 50% at 50% 48%, var(--spectrum-6), transparent 66%);
+  filter: saturate(1.25) brightness(1.05);
+  opacity: 0.92;
+  animation:
+    spectral-drift 26s ease-in-out infinite,
+    spectral-hue 40s linear infinite;
+  will-change: transform, filter;
+}
+
+.stage-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: radial-gradient(120% 100% at 50% 0%, #000 35%, transparent 78%);
+}
+
+.stage-beam {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.16),
+    transparent
+  );
+  filter: blur(6px);
+  animation: beam-sweep 11s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+/* Grain overlay for texture/depth. */
+.stage-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* High-frequency stripe field — used behind refraction demos so the bend +
+   colour fringing are unmistakable. */
+.stage-stripes {
+  background-image: repeating-linear-gradient(
+    66deg,
+    #ff5d3b 0 18px,
+    #2fa9ff 18px 36px,
+    #34e0a1 36px 54px,
+    #8b5cf6 54px 72px
+  );
+}
+
+/* Section reveal on scroll (paired with IntersectionObserver). */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.reveal.is-in {
+  animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float {
+  animation: float-soft 7s ease-in-out infinite;
+}
+
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+
+/* Force the no-refraction fallback (for the "preview Safari/Firefox" toggle). */
+.force-fallback .glass-refract {
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) !important;
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness)) !important;
+}
+
+/* Pretty range inputs for the playground. */
+input[type="range"].glass-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.16);
+  outline: none;
+}
+input[type="range"].glass-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-haze);
+  cursor: pointer;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12);
+}
+input[type="range"].glass-range::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-haze);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-mesh,
+  .stage-beam,
+  .animate-float,
+  .marquee-track {
+    animation: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

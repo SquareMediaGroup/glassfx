@@ -1,8 +1,12 @@
+"use client";
+
 /**
  * glassfx/react — thin React bindings over the vanilla core.
  *
  * Authored with React.createElement (no JSX) so the package ships buildless
  * and runs straight from npm or a CDN. React is an optional peer dependency.
+ * Marked "use client" because the components use hooks — so it imports cleanly
+ * into React Server Component trees (Next.js App Router, etc.).
  *
  *   import { GlassFilter, Glass } from "glassfx/react";
  *   import "glassfx/glass.css";
