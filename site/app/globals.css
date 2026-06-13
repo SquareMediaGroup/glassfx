@@ -124,8 +124,7 @@ h1, h2, h3 {
 }
 
 .section-cv {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 700px;
+  contain: paint;
 }
 
 /* Force the no-refraction fallback (for the preview toggle). */
