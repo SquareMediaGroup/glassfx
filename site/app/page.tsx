@@ -3,7 +3,7 @@ import HeroLens from "@/components/HeroLens";
 import Reveal from "@/components/Reveal";
 import Controls from "@/components/Controls";
 import Playground from "@/components/Playground";
-import EffectsLab from "@/components/EffectsLab";
+
 import FallbackToggle from "@/components/FallbackToggle";
 import CodeBlock from "@/components/CodeBlock";
 import Backdrop from "@/components/Backdrop";
@@ -219,40 +219,6 @@ export default function Home() {
           </Reveal>
         </section>
 
-        {/* ── EFFECTS LAB ────────────────────────────────────────────── */}
-        <section className="section-cv mt-40">
-          <Reveal>
-            <Label>Effects lab</Label>
-            <h2 className="max-w-xl text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Modals, toasts, chrome.
-            </h2>
-          </Reveal>
-          <Reveal delay={100} className="mt-12">
-            <div className="relative overflow-hidden rounded-[40px] px-6 py-12">
-              <img src="https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
-              <EffectsLab />
-            </div>
-          </Reveal>
-          {/* chip marquee */}
-          <Reveal delay={60} className="mt-4">
-            <div className="relative overflow-hidden rounded-3xl border border-white/[0.06] py-5">
-              <div className="relative flex w-max marquee-track gap-3">
-                {[...Array(2)].flatMap((_, k) =>
-                  ["refraction", "dispersion", "depth", "bloom", "frost", "rim", "tilt", "~1KB", "MIT"].map(
-                    (t) => (
-                      <span
-                        key={`${k}-${t}`}
-                        className="glass glass-sm glass-refract glass-pill whitespace-nowrap px-5 py-2 text-sm text-white/70"
-                      >
-                        {t}
-                      </span>
-                    )
-                  )
-                )}
-              </div>
-            </div>
-          </Reveal>
-        </section>
 
         {/* ── RECIPES / COMPONENTS ─────────────────────────────────────── */}
         <section id="recipes" className="section-cv mt-40">
