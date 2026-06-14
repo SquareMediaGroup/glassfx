@@ -4,6 +4,7 @@ const LINKS = [
   { label: "Demo", href: "#demo" },
   { label: "Shapes", href: "#shapes" },
   { label: "Playground", href: "#playground" },
+  { label: "Recipes", href: "#recipes" },
   { label: "Install", href: "#install" },
 ];
 
