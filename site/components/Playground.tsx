@@ -84,10 +84,10 @@ export default function Playground() {
   const [radius, setRadius] = useState(28);
   const [refractStrength, setRefractStrength] = useState(48);
   const [refractDispersion, setRefractDispersion] = useState(6);
-  const [refractBlur, setRefractBlur] = useState(5);
   const [tiltMax, setTiltMax] = useState(6);
   const [grainOpacity, setGrainOpacity] = useState(0.025);
   const [backdrop, setBackdrop] = useState<Backdrop>("stripes");
+  const [refractionEnabled, setRefractionEnabled] = useState(true);
 
   const grainUrl = useMemo(
     () =>
@@ -107,25 +107,24 @@ export default function Playground() {
         "--glass-radius": `${radius}px`,
         "--glass-refract-strength": refractStrength,
         "--glass-refract-dispersion": refractDispersion,
-        "--glass-refract-blur": `${refractBlur}px`,
         "--glass-tilt-max": `${tiltMax}deg`,
         "--glass-grain": grainOpacity > 0 ? grainUrl : "none",
       }) as CSSProperties,
-    [tint, alpha, blur, bloom, bloomSize, rim, radius, refractStrength, refractDispersion, refractBlur, tiltMax, grainOpacity, grainUrl]
+    [tint, alpha, blur, bloom, bloomSize, rim, radius, refractStrength, refractDispersion, tiltMax, grainOpacity, grainUrl]
   );
 
   const code = useMemo(
     () =>
-      `<div\n  class="glass glass-refract"\n  style="\n    --glass-tint: ${hexToRgb(
+      `<div\n  class="${['glass', refractionEnabled && 'glass-refract'].filter(Boolean).join(' ')}"\n  style="\n    --glass-tint: ${hexToRgb(
         tint
       )};\n    --glass-alpha: ${alpha};\n    --glass-blur: ${blur}px;\n    --glass-bloom: ${hexToRgb(
         bloom
-      )};\n    --glass-bloom-size: ${bloomSize}px;\n    --glass-rim: ${rim};\n    --glass-radius: ${radius}px;\n    --glass-refract-strength: ${refractStrength};\n    --glass-refract-dispersion: ${refractDispersion};\n    --glass-refract-blur: ${refractBlur}px;\n    --glass-tilt-max: ${tiltMax}deg;\n    --glass-grain: ${
+      )};\n    --glass-bloom-size: ${bloomSize}px;\n    --glass-rim: ${rim};\n    --glass-radius: ${radius}px;\n    --glass-refract-strength: ${refractStrength};\n    --glass-refract-dispersion: ${refractDispersion};\n    --glass-tilt-max: ${tiltMax}deg;\n    --glass-grain: ${
         grainOpacity > 0
           ? `url('data:image/svg+xml,%3Csvg...opacity=\x22${grainOpacity}\x22...%3E')`
           : "none"
       };\n  "\n>…</div>`,
-    [tint, alpha, blur, bloom, bloomSize, rim, radius, refractStrength, refractDispersion, refractBlur, tiltMax, grainOpacity]
+    [tint, alpha, blur, bloom, bloomSize, rim, radius, refractStrength, refractDispersion, tiltMax, grainOpacity, refractionEnabled]
   );
 
   return (
@@ -138,7 +137,7 @@ export default function Playground() {
         />
         <div className="absolute inset-0 bg-black/10" />
         <div
-          className="glass glass-refract relative grid h-44 w-72 place-items-center text-center"
+          className={`glass ${refractionEnabled ? 'glass-refract' : ''} relative grid h-44 w-72 place-items-center text-center`}
           style={style}
         >
           <div>
@@ -208,9 +207,23 @@ export default function Playground() {
 
             {/* Advanced Filters */}
             <div className="flex flex-col gap-5">
-              <Slider label="Refract Strength" value={refractStrength} min={0} max={150} step={2} onChange={setRefractStrength} />
-              <Slider label="Refract Dispersion" value={refractDispersion} min={0} max={30} step={1} onChange={setRefractDispersion} />
-              <Slider label="Refract Blur" value={refractBlur} min={0} max={20} step={1} unit="px" onChange={setRefractBlur} />
+              <label className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  checked={refractionEnabled}
+                  onChange={(e) => setRefractionEnabled(e.target.checked)}
+                  className="rounded border-white/10 bg-black/20 text-white focus:ring-1 focus:ring-white/50"
+                />
+                <span className="font-mono text-[11px] uppercase tracking-wider text-haze-dim">
+                  Enable Refraction
+                </span>
+              </label>
+              {refractionEnabled && (
+                <>
+                  <Slider label="Refract Strength" value={refractStrength} min={0} max={150} step={2} onChange={setRefractStrength} />
+                  <Slider label="Refract Dispersion" value={refractDispersion} min={0} max={30} step={1} onChange={setRefractDispersion} />
+                </>
+              )}
               <div className="my-1 border-t border-white/5" />
               <Slider label="Bloom Size" value={bloomSize} min={60} max={400} step={10} unit="px" onChange={setBloomSize} />
               <Slider label="Hover Tilt (Max)" value={tiltMax} min={0} max={30} step={1} unit="deg" onChange={setTiltMax} />

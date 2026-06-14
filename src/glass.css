@@ -29,7 +29,6 @@
   --glass-rim: 0.5;                   /* lit-edge brightness (top)           */
   --glass-refract-strength: 48;       /* mean refraction scale               */
   --glass-refract-dispersion: 6;      /* chromatic aberration spread         */
-  --glass-refract-blur: 5px;          /* post-displacement blur              */
   --glass-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
   --glass-tilt-max: 6deg;
   --glass-tilt-perspective: 1000px;
@@ -186,7 +185,7 @@
    whole filter). */
 @supports (backdrop-filter: url("#glassfx-refract")) {
   .glass-refract {
-    backdrop-filter: var(--glass-refract-id, url(#glassfx-refract)) blur(var(--glass-refract-blur, 5px))
+    backdrop-filter: var(--glass-refract-id, url(#glassfx-refract)) blur(var(--glass-blur))
       saturate(var(--glass-saturate)) brightness(var(--glass-brightness));
   }
 }
