@@ -4,7 +4,6 @@ import Reveal from "@/components/Reveal";
 import Controls from "@/components/Controls";
 import Playground from "@/components/Playground";
 
-import FallbackToggle from "@/components/FallbackToggle";
 import CodeBlock from "@/components/CodeBlock";
 import Backdrop from "@/components/Backdrop";
 import { Glass } from "glassfx/react";
@@ -27,13 +26,6 @@ const SHAPES: { label: string; cls: string; style?: React.CSSProperties }[] = [
     cls: "h-32 w-36",
     style: { borderRadius: "62% 38% 54% 46% / 49% 56% 44% 51%" },
   },
-];
-
-const CLASS_TABLE: [string, string][] = [
-  ["glass", "Base material: depth, frost, rim, bloom."],
-  ["glass-refract", "Real backdrop lensing + chromatic dispersion (Chromium)."],
-  ["glass-sm", "Less frost for higher legibility."],
-  ["glass-pill", "border-radius: 9999px."],
 ];
 
 function Label({ children }: { children: React.ReactNode }) {
@@ -86,55 +78,7 @@ export default function Home() {
           </Reveal>
         </section>
 
-        {/* ── DEMO GRID: The effect speaks ────────────────────────────── */}
-        <section id="demo" className="section-cv mt-40">
-          <Reveal>
-            <Label>The effect</Label>
-          </Reveal>
 
-          <div className="grid gap-4 md:grid-cols-12">
-            {/* Large refraction card */}
-            <Reveal className="md:col-span-8">
-              <Glass tilt refract className="relative flex h-[480px] flex-col justify-end overflow-hidden rounded-3xl p-10">
-                <img src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1200&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
-                <div className="relative">
-                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">
-                    Refraction
-                  </p>
-                  <h2 className="mt-2 text-3xl font-semibold tracking-tight text-white">
-                    Light actually bends.
-                  </h2>
-                  <p className="mt-2 max-w-sm text-sm text-white/50">
-                    SVG displacement warps the backdrop with R/G/B pushed apart — real chromatic dispersion, not a blurred overlay.
-                  </p>
-                </div>
-              </Glass>
-            </Reveal>
-
-            {/* Stacked right column */}
-            <div className="flex flex-col gap-4 md:col-span-4">
-              <Reveal delay={80}>
-                <Glass tilt sm refract className="relative flex h-[230px] flex-col justify-end overflow-hidden rounded-3xl p-8">
-                  <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
-                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">Depth</p>
-                  <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">
-                    Specular edges, real shadow.
-                  </h3>
-                </Glass>
-              </Reveal>
-              <Reveal delay={160}>
-                <Glass tilt sm refract className="relative flex h-[230px] flex-col justify-end overflow-hidden rounded-3xl p-8">
-                  <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&q=80&auto=format&fit=crop" alt="" className="absolute inset-0 -z-[1] h-full w-full object-cover" />
-                  <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">Bloom</p>
-                  <h3 className="mt-2 text-xl font-semibold tracking-tight text-white">
-                    Cursor-tracking hotspot.
-                  </h3>
-                  <p className="mt-1 text-sm text-white/40">Hover this card.</p>
-                </Glass>
-              </Reveal>
-            </div>
-          </div>
-        </section>
 
         {/* ── SHAPES ─────────────────────────────────────────────────── */}
         <section id="shapes" className="section-cv mt-40">
@@ -228,13 +172,27 @@ export default function Home() {
               Copy & paste.
             </h2>
             <p className="mt-6 max-w-2xl text-sm text-white/40">
-              Beautiful scroll animations like the ones on this page shouldn't bloat the core material library. Copy the <code>&lt;Reveal&gt;</code> component directly into your project.
+              Drop these snippets into your project to get up and running faster. Includes our custom <code>&lt;Reveal&gt;</code> component and an AI Agent prompt.
             </p>
           </Reveal>
           <Reveal delay={100} className="mt-12">
             <details className="group rounded-3xl border border-white/10 bg-white/[0.02] transition-colors hover:bg-white/[0.04]">
               <summary className="flex cursor-pointer items-center justify-between px-8 py-6 font-mono text-[13px] uppercase tracking-widest text-white/60 outline-none transition-colors group-hover:text-white">
-                <span>View Component Code</span>
+                <span>AI Agent Prompt (e.g. .cursorrules)</span>
+                <span className="text-white/40 transition-transform group-open:rotate-180">↓</span>
+              </summary>
+              <div className="grid gap-4 p-4 pt-0 sm:p-6 sm:pt-0">
+                <CodeBlock
+                  label=".cursorrules / Agent Instructions"
+                  code={`You are an expert AI assistant. This project uses \`glassfx\` for glassmorphism.\n\nInstallation:\nRun \`npm install glassfx\`\n\nUsage in React/Next.js:\n1. Ensure \`<GlassFilter />\` is rendered near the root (e.g. in layout.tsx):\n\`\`\`tsx\nimport { GlassFilter } from "glassfx/react";\nimport "glassfx/glass.css";\n\nexport default function Layout({ children }) {\n  return (\n    <body>\n      <GlassFilter />\n      {children}\n    </body>\n  );\n}\n\`\`\`\n\n2. Use the \`<Glass>\` component for elements that need the glass effect:\n\`\`\`tsx\nimport { Glass } from "glassfx/react";\n\n<Glass strong refract className="rounded-2xl p-6">\n  Content here\n</Glass>\n\`\`\`\n\nNotes:\n- Use \`refract\` for the real refraction effect.\n- Modifiers: \`strong\`, \`sm\`, \`md\`, \`xl\`, \`pill\`, \`opaque\`, \`translucent\`, \`legible-text\`.\n- Elements MUST have a \`border-radius\` for the rim and bloom to follow correctly.\n- Defaults to \`<div>\`; use \`as="button"\` (or other tags) for different tags.`}
+                />
+              </div>
+            </details>
+          </Reveal>
+          <Reveal delay={150} className="mt-4">
+            <details className="group rounded-3xl border border-white/10 bg-white/[0.02] transition-colors hover:bg-white/[0.04]">
+              <summary className="flex cursor-pointer items-center justify-between px-8 py-6 font-mono text-[13px] uppercase tracking-widest text-white/60 outline-none transition-colors group-hover:text-white">
+                <span>View Component Code (&lt;Reveal&gt;)</span>
                 <span className="text-white/40 transition-transform group-open:rotate-180">↓</span>
               </summary>
               <div className="grid gap-4 p-4 pt-0 sm:p-6 sm:pt-0">
@@ -251,64 +209,7 @@ export default function Home() {
           </Reveal>
         </section>
 
-        {/* ── INSTALL ────────────────────────────────────────────────── */}
-        <section id="install" className="section-cv mt-40">
-          <Reveal>
-            <Label>Install</Label>
-            <h2 className="max-w-xl text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Two lines, any stack.
-            </h2>
-          </Reveal>
-          <div className="mt-12 grid gap-4 lg:grid-cols-2">
-            <Reveal>
-              <CodeBlock
-                label="npm"
-                code={`import "glassfx";           // injects the lens + bloom\nimport "glassfx/glass.css";  // the styles\n\n<div class="glass glass-refract">…</div>`}
-              />
-            </Reveal>
-            <Reveal delay={80}>
-              <CodeBlock
-                label="cdn — no build"
-                code={`<link rel="stylesheet"\n  href="https://unpkg.com/glassfx/src/glass.css" />\n<script type="module">\n  import "https://unpkg.com/glassfx";\n</script>`}
-              />
-            </Reveal>
-            <Reveal delay={40}>
-              <CodeBlock
-                label="react"
-                code={`import { GlassFilter, Glass } from "glassfx/react";\nimport "glassfx/glass.css";\n\n<GlassFilter />\n<Glass sm refract tilt className="rounded-2xl p-6">\n  Frosted, lensed, tilting.\n</Glass>`}
-              />
-            </Reveal>
-            <Reveal delay={120}>
-              <div className="glass glass-sm glass-refract rounded-2xl p-6">
-                <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/30">
-                  classes
-                </p>
-                <ul className="mt-3 divide-y divide-white/[0.06]">
-                  {CLASS_TABLE.map(([c, d]) => (
-                    <li key={c} className="flex flex-col gap-0.5 py-2 sm:flex-row sm:gap-4">
-                      <code className="min-w-[150px] font-mono text-[12.5px] text-white">
-                        {c}
-                      </code>
-                      <span className="text-sm text-white/40">{d}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          </div>
 
-          {/* browser support */}
-          <Reveal delay={60} className="mt-12">
-            <Label>Browser support — honest about it</Label>
-            <p className="mb-6 max-w-2xl text-sm text-white/40">
-              Depth, frost, rim and bloom work everywhere with{" "}
-              <code className="font-mono text-[13px] text-white/60">backdrop-filter</code>. Real
-              refraction is Chromium-only today; Safari and Firefox fall back to a
-              clean frost — never a broken box.
-            </p>
-            <FallbackToggle />
-          </Reveal>
-        </section>
 
         {/* ── Footer ─────────────────────────────────────────────────── */}
         <footer className="mt-40 border-t border-white/[0.06] pt-10 pb-8">
