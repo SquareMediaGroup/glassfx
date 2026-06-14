@@ -102,6 +102,7 @@ export function initBloomTracker() {
 
   let raf = 0;
   let last = null;
+  let activeEl = null;
 
   const onMove = (e) => {
     last = e;
@@ -112,10 +113,26 @@ export function initBloomTracker() {
       if (!ev) return;
       const target = ev.target;
       const el = target && target.closest ? target.closest(".glass") : null;
+      
+      if (el !== activeEl) {
+        if (activeEl) {
+          activeEl.style.removeProperty("--glass-angle");
+        }
+        activeEl = el;
+      }
+
       if (!el) return;
       const r = el.getBoundingClientRect();
-      el.style.setProperty("--glass-mx", `${ev.clientX - r.left}px`);
-      el.style.setProperty("--glass-my", `${ev.clientY - r.top}px`);
+      const mx = ev.clientX - r.left;
+      const my = ev.clientY - r.top;
+      el.style.setProperty("--glass-mx", `${mx}px`);
+      el.style.setProperty("--glass-my", `${my}px`);
+
+      // Calculate angle from center of card for dynamic light-tracking rim
+      const cx = r.width / 2;
+      const cy = r.height / 2;
+      const angle = Math.round(Math.atan2(my - cy, mx - cx) * (180 / Math.PI)) + 270;
+      el.style.setProperty("--glass-angle", `${angle}deg`);
     });
   };
 
@@ -123,6 +140,9 @@ export function initBloomTracker() {
   return () => {
     document.removeEventListener("pointermove", onMove);
     if (raf) cancelAnimationFrame(raf);
+    if (activeEl) {
+      activeEl.style.removeProperty("--glass-angle");
+    }
     trackerStarted = false;
   };
 }
@@ -158,25 +178,37 @@ export function initTiltTracker(el) {
     if (raf) return;
     raf = requestAnimationFrame(() => {
       raf = 0;
+      
+      const style = getComputedStyle(el);
+      const maxStr = style.getPropertyValue("--glass-tilt-max").trim();
+      const perspectiveStr = style.getPropertyValue("--glass-tilt-perspective").trim();
+
+      const maxRot = maxStr ? parseFloat(maxStr) : 6;
+      const perspective = perspectiveStr || "1000px";
+
       const rect = el.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      // Calculate rotation (-6 to 6 degrees max)
-      const rotX = -((y - rect.height / 2) / (rect.height / 2)) * 6;
-      const rotY = ((x - rect.width / 2) / (rect.width / 2)) * 6;
+      // Calculate rotation based on customized max angle
+      const rotX = -((y - rect.height / 2) / (rect.height / 2)) * maxRot;
+      const rotY = ((x - rect.width / 2) / (rect.width / 2)) * maxRot;
 
       el.style.transitionDuration = "0.1s";
       el.style.transitionProperty = "transform";
-      el.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+      el.style.transform = `perspective(${perspective}) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
     });
   };
 
   const onLeave = () => {
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
+
+    const style = getComputedStyle(el);
+    const perspective = style.getPropertyValue("--glass-tilt-perspective").trim() || "1000px";
+
     el.style.transitionDuration = "0.4s";
-    el.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+    el.style.transform = `perspective(${perspective}) rotateX(0deg) rotateY(0deg)`;
 
     setTimeout(() => {
       el.style.transform = "";

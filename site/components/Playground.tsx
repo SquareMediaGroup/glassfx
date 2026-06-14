@@ -85,7 +85,15 @@ export default function Playground() {
   const [refractStrength, setRefractStrength] = useState(48);
   const [refractDispersion, setRefractDispersion] = useState(6);
   const [refractBlur, setRefractBlur] = useState(5);
+  const [tiltMax, setTiltMax] = useState(6);
+  const [grainOpacity, setGrainOpacity] = useState(0.025);
   const [backdrop, setBackdrop] = useState<Backdrop>("stripes");
+
+  const grainUrl = useMemo(
+    () =>
+      `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='${grainOpacity}'/%3E%3C/svg%3E")`,
+    [grainOpacity]
+  );
 
   const style = useMemo<CSSProperties>(
     () =>
@@ -100,8 +108,10 @@ export default function Playground() {
         "--glass-refract-strength": refractStrength,
         "--glass-refract-dispersion": refractDispersion,
         "--glass-refract-blur": `${refractBlur}px`,
+        "--glass-tilt-max": `${tiltMax}deg`,
+        "--glass-grain": grainOpacity > 0 ? grainUrl : "none",
       }) as CSSProperties,
-    [tint, alpha, blur, bloom, bloomSize, rim, radius, refractStrength, refractDispersion, refractBlur]
+    [tint, alpha, blur, bloom, bloomSize, rim, radius, refractStrength, refractDispersion, refractBlur, tiltMax, grainOpacity, grainUrl]
   );
 
   const code = useMemo(
@@ -110,8 +120,12 @@ export default function Playground() {
         tint
       )};\n    --glass-alpha: ${alpha};\n    --glass-blur: ${blur}px;\n    --glass-bloom: ${hexToRgb(
         bloom
-      )};\n    --glass-bloom-size: ${bloomSize}px;\n    --glass-rim: ${rim};\n    --glass-radius: ${radius}px;\n    --glass-refract-strength: ${refractStrength};\n    --glass-refract-dispersion: ${refractDispersion};\n    --glass-refract-blur: ${refractBlur}px;\n  "\n>…</div>`,
-    [tint, alpha, blur, bloom, bloomSize, rim, radius, refractStrength, refractDispersion, refractBlur]
+      )};\n    --glass-bloom-size: ${bloomSize}px;\n    --glass-rim: ${rim};\n    --glass-radius: ${radius}px;\n    --glass-refract-strength: ${refractStrength};\n    --glass-refract-dispersion: ${refractDispersion};\n    --glass-refract-blur: ${refractBlur}px;\n    --glass-tilt-max: ${tiltMax}deg;\n    --glass-grain: ${
+        grainOpacity > 0
+          ? `url('data:image/svg+xml,%3Csvg...opacity=\x22${grainOpacity}\x22...%3E')`
+          : "none"
+      };\n  "\n>…</div>`,
+    [tint, alpha, blur, bloom, bloomSize, rim, radius, refractStrength, refractDispersion, refractBlur, tiltMax, grainOpacity]
   );
 
   return (
@@ -187,6 +201,8 @@ export default function Playground() {
             <Slider label="refract strength" value={refractStrength} min={0} max={150} step={2} onChange={setRefractStrength} />
             <Slider label="refract dispersion" value={refractDispersion} min={0} max={30} step={1} onChange={setRefractDispersion} />
             <Slider label="refract blur" value={refractBlur} min={0} max={20} step={1} unit="px" onChange={setRefractBlur} />
+            <Slider label="tilt max" value={tiltMax} min={0} max={30} step={1} unit="deg" onChange={setTiltMax} />
+            <Slider label="grain opacity" value={grainOpacity} min={0} max={0.1} step={0.005} onChange={setGrainOpacity} />
           </div>
         </div>
         <CodeBlock code={code} label="your glass" />

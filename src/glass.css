@@ -30,6 +30,9 @@
   --glass-refract-strength: 48;       /* mean refraction scale               */
   --glass-refract-dispersion: 6;      /* chromatic aberration spread         */
   --glass-refract-blur: 5px;          /* post-displacement blur              */
+  --glass-grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+  --glass-tilt-max: 6deg;
+  --glass-tilt-perspective: 1000px;
 
   /* strong modifier defaults */
   --glass-strong-tint: 30, 38, 48;
@@ -44,6 +47,7 @@
   /* Diagonal sheen baked into the background so it always sits *below* content
      (no z-index fight) — the static "faked-refraction" highlight. */
   background:
+    var(--glass-grain),
     linear-gradient(
       135deg,
       rgba(255, 255, 255, var(--glass-sheen)),
@@ -80,10 +84,11 @@
   border-radius: inherit;
   padding: 1px;
   background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, var(--glass-rim)),
-    rgba(255, 255, 255, 0.08) 45%,
-    rgba(255, 255, 255, 0.18)
+    var(--glass-angle, 180deg),
+    rgba(255, 255, 255, var(--glass-rim)) 0%,
+    rgba(255, 255, 255, 0.12) 40%,
+    rgba(255, 255, 255, 0.04) 60%,
+    rgba(255, 255, 255, 0.12) 100%
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
