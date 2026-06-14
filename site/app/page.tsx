@@ -266,16 +266,22 @@ export default function Home() {
             </p>
           </Reveal>
           <Reveal delay={100} className="mt-12">
-            <CodeBlock
-              label="Reveal.tsx"
-              code={`"use client";\n\nimport { useEffect, useRef, useState, type ReactNode } from "react";\n\nexport default function Reveal({\n  children,\n  className = "",\n  delay = 0,\n  as: Tag = "div",\n}: {\n  children: ReactNode;\n  className?: string;\n  delay?: number;\n  as?: "div" | "section" | "li";\n}) {\n  const ref = useRef<HTMLElement>(null);\n  const [seen, setSeen] = useState(false);\n\n  useEffect(() => {\n    const el = ref.current;\n    if (!el || seen) return;\n    const io = new IntersectionObserver(\n      ([entry]) => {\n        if (entry.isIntersecting) {\n          setSeen(true);\n          io.disconnect();\n        }\n      },\n      { threshold: 0.05, rootMargin: "200px 0px 200px 0px" }\n    );\n    io.observe(el);\n    return () => io.disconnect();\n  }, [seen]);\n\n  const Comp = Tag as any;\n  return (\n    <Comp\n      ref={ref}\n      className={\`reveal \${seen ? "is-in" : ""} \${className}\`}\n      style={{ animationDelay: \`\${delay}ms\` }}\n    >\n      {children}\n    </Comp>\n  );\n}`}
-            />
-          </Reveal>
-          <Reveal delay={160} className="mt-4">
-            <CodeBlock
-              label="globals.css"
-              code={`.reveal {\n  opacity: 0;\n  transform: translateY(24px);\n}\n.reveal.is-in {\n  animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;\n}\n\n@keyframes rise {\n  from { opacity: 0; transform: translateY(24px); }\n  to { opacity: 1; transform: translateY(0); }\n}`}
-            />
+            <details className="group rounded-3xl border border-white/10 bg-white/[0.02] transition-colors hover:bg-white/[0.04]">
+              <summary className="flex cursor-pointer items-center justify-between px-8 py-6 font-mono text-[13px] uppercase tracking-widest text-white/60 outline-none transition-colors group-hover:text-white">
+                <span>View Component Code</span>
+                <span className="text-white/40 transition-transform group-open:rotate-180">↓</span>
+              </summary>
+              <div className="grid gap-4 p-4 pt-0 sm:p-6 sm:pt-0">
+                <CodeBlock
+                  label="Reveal.tsx"
+                  code={`"use client";\n\nimport { useEffect, useRef, useState, type ReactNode } from "react";\n\nexport default function Reveal({\n  children,\n  className = "",\n  delay = 0,\n  as: Tag = "div",\n}: {\n  children: ReactNode;\n  className?: string;\n  delay?: number;\n  as?: "div" | "section" | "li";\n}) {\n  const ref = useRef<HTMLElement>(null);\n  const [seen, setSeen] = useState(false);\n\n  useEffect(() => {\n    const el = ref.current;\n    if (!el || seen) return;\n    const io = new IntersectionObserver(\n      ([entry]) => {\n        if (entry.isIntersecting) {\n          setSeen(true);\n          io.disconnect();\n        }\n      },\n      { threshold: 0.05, rootMargin: "200px 0px 200px 0px" }\n    );\n    io.observe(el);\n    return () => io.disconnect();\n  }, [seen]);\n\n  const Comp = Tag as any;\n  return (\n    <Comp\n      ref={ref}\n      className={\`reveal \${seen ? "is-in" : ""} \${className}\`}\n      style={{ animationDelay: \`\${delay}ms\` }}\n    >\n      {children}\n    </Comp>\n  );\n}`}
+                />
+                <CodeBlock
+                  label="globals.css"
+                  code={`.reveal {\n  opacity: 0;\n  transform: translateY(24px);\n}\n.reveal.is-in {\n  animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;\n}\n\n@keyframes rise {\n  from { opacity: 0; transform: translateY(24px); }\n  to { opacity: 1; transform: translateY(0); }\n}`}
+                />
+              </div>
+            </details>
           </Reveal>
         </section>
 

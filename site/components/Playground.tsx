@@ -166,46 +166,60 @@ export default function Playground() {
       </div>
 
       {/* Controls + live code */}
-      <div className="flex flex-col gap-5">
-        <div className="glass glass-sm glass-refract rounded-3xl p-5">
-          <div className="grid gap-4">
-            <div className="flex items-center gap-4">
-              <label className="flex items-center gap-2">
-                <span className="font-mono text-[11px] uppercase tracking-wider text-haze-dim">
-                  tint
-                </span>
-                <input
-                  type="color"
-                  value={tint}
-                  onChange={(e) => setTint(e.target.value)}
-                  className="h-7 w-9 cursor-pointer rounded border-0 bg-transparent p-0"
-                />
-              </label>
-              <label className="flex items-center gap-2">
-                <span className="font-mono text-[11px] uppercase tracking-wider text-haze-dim">
-                  bloom
-                </span>
-                <input
-                  type="color"
-                  value={bloom}
-                  onChange={(e) => setBloom(e.target.value)}
-                  className="h-7 w-9 cursor-pointer rounded border-0 bg-transparent p-0"
-                />
-              </label>
+      <div className="flex flex-col gap-6 md:col-span-5">
+        <div className="glass glass-sm glass-refract rounded-[32px] p-6 sm:p-8">
+          <div className="mb-6 flex items-center justify-between">
+            <h3 className="font-display text-xl font-semibold text-white">Inspector</h3>
+          </div>
+          
+          <div className="grid gap-x-12 gap-y-10 sm:grid-cols-2">
+            
+            {/* Core Settings */}
+            <div className="flex flex-col gap-5">
+              <div className="mb-2 flex items-center gap-6">
+                <label className="flex items-center gap-3">
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-haze-dim">
+                    Tint
+                  </span>
+                  <input
+                    type="color"
+                    value={tint}
+                    onChange={(e) => setTint(e.target.value)}
+                    className="apple-color"
+                  />
+                </label>
+                <label className="flex items-center gap-3">
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-haze-dim">
+                    Bloom
+                  </span>
+                  <input
+                    type="color"
+                    value={bloom}
+                    onChange={(e) => setBloom(e.target.value)}
+                    className="apple-color"
+                  />
+                </label>
+              </div>
+              <Slider label="Alpha" value={alpha} min={0} max={1} step={0.01} onChange={setAlpha} />
+              <Slider label="Blur" value={blur} min={0} max={40} step={1} unit="px" onChange={setBlur} />
+              <Slider label="Radius" value={radius} min={0} max={120} step={2} unit="px" onChange={setRadius} />
+              <Slider label="Rim Light" value={rim} min={0} max={1} step={0.05} onChange={setRim} />
             </div>
-            <Slider label="alpha" value={alpha} min={0} max={1} step={0.01} onChange={setAlpha} />
-            <Slider label="blur" value={blur} min={0} max={40} step={1} unit="px" onChange={setBlur} />
-            <Slider label="bloom size" value={bloomSize} min={60} max={400} step={10} unit="px" onChange={setBloomSize} />
-            <Slider label="rim" value={rim} min={0} max={1} step={0.05} onChange={setRim} />
-            <Slider label="radius" value={radius} min={0} max={120} step={2} unit="px" onChange={setRadius} />
-            <Slider label="refract strength" value={refractStrength} min={0} max={150} step={2} onChange={setRefractStrength} />
-            <Slider label="refract dispersion" value={refractDispersion} min={0} max={30} step={1} onChange={setRefractDispersion} />
-            <Slider label="refract blur" value={refractBlur} min={0} max={20} step={1} unit="px" onChange={setRefractBlur} />
-            <Slider label="tilt max" value={tiltMax} min={0} max={30} step={1} unit="deg" onChange={setTiltMax} />
-            <Slider label="grain opacity" value={grainOpacity} min={0} max={0.1} step={0.005} onChange={setGrainOpacity} />
+
+            {/* Advanced Filters */}
+            <div className="flex flex-col gap-5">
+              <Slider label="Refract Strength" value={refractStrength} min={0} max={150} step={2} onChange={setRefractStrength} />
+              <Slider label="Refract Dispersion" value={refractDispersion} min={0} max={30} step={1} onChange={setRefractDispersion} />
+              <Slider label="Refract Blur" value={refractBlur} min={0} max={20} step={1} unit="px" onChange={setRefractBlur} />
+              <div className="my-1 border-t border-white/5" />
+              <Slider label="Bloom Size" value={bloomSize} min={60} max={400} step={10} unit="px" onChange={setBloomSize} />
+              <Slider label="Hover Tilt (Max)" value={tiltMax} min={0} max={30} step={1} unit="deg" onChange={setTiltMax} />
+              <Slider label="Film Grain" value={grainOpacity} min={0} max={0.1} step={0.005} onChange={setGrainOpacity} />
+            </div>
+
           </div>
         </div>
-        <CodeBlock code={code} label="your glass" />
+        <CodeBlock code={code} label="Your Component Code" />
       </div>
     </div>
   );
